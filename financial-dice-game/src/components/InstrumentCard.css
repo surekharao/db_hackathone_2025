@@ -1,0 +1,75 @@
+.instrument-card {
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  max-width: 600px;
+  width: 100%;
+}
+
+.instrument-card.learning {
+  background-color: #e8f5e9;
+  border: 2px solid #4caf50;
+}
+
+.instrument-card.failed {
+  background-color: #ffebee;
+  border: 2px solid #f44336;
+}
+
+.instrument-card h2 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.type {
+  color: #7f8c8d;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.description {
+  color: #34495e;
+  line-height: 1.6;
+}
+
+.success-message {
+  color: #2e7d32;
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+.failed-message {
+  color: #c62828;
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+.next-button, .retry-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 15px;
+}
+
+.next-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.next-button:hover {
+  background-color: #388e3c;
+}
+
+.retry-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.retry-button:hover {
+  background-color: #d32f2f;
+}
