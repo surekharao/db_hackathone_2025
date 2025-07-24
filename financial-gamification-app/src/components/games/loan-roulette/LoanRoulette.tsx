@@ -1,14 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { loanTopics, LoanTopic } from '../../../data/loanTopics';
-import './LoanRoulette.css';
-
-interface RouletteTerm {
-  id: number;
-  term: string;
-  explanation: string;
-  points: number;
-  category: string;
-}
+import React, { useState } from "react";
+import { loanTopics } from "../../../data/loanTopics";
+import "./LoanRoulette.css";
+import SpinWheel from "./SpinWheel";
+import { RouletteTerm } from "./types";
 
 const LoanRoulette: React.FC = () => {
   const [spinning, setSpinning] = useState(false);
@@ -22,12 +16,12 @@ const LoanRoulette: React.FC = () => {
   // Select random terms from loanTopics for the roulette
   const rouletteTerms: RouletteTerm[] = React.useMemo(() => {
     const shuffled = [...loanTopics].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, 8).map(topic => ({
+    return shuffled.slice(0, 8).map((topic) => ({
       id: topic.id,
       term: topic.name,
       explanation: topic.explanation,
       points: topic.points,
-      category: topic.category
+      category: topic.category,
     }));
   }, [currentRound]); // Reshuffle terms each round
 
@@ -44,12 +38,13 @@ const LoanRoulette: React.FC = () => {
 
       // Easing function for smooth deceleration
       const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
-      
+
       // Calculate current rotation including multiple spins
       const totalSpins = 5; // Number of full rotations
-      const targetRotation = (360 * totalSpins) + (finalIndex * (360 / rouletteTerms.length));
+      const targetRotation =
+        360 * totalSpins + finalIndex * (360 / rouletteTerms.length);
       currentRotation = targetRotation * easeOut(progress);
-      
+
       setRotationDegree(currentRotation);
 
       if (progress < 1) {
@@ -58,7 +53,7 @@ const LoanRoulette: React.FC = () => {
         setIsAnimating(false);
         const selected = rouletteTerms[finalIndex];
         setSelectedTerm(selected);
-        setScore(prev => prev + selected.points);
+        setScore((prev) => prev + selected.points);
         setTimeout(() => setShowExplanation(true), 300);
         setSpinning(false);
       }
@@ -74,9 +69,17 @@ const LoanRoulette: React.FC = () => {
     setSelectedTerm(null);
     setShowExplanation(false);
 
-    // Random term selection
-    const termIndex = Math.floor(Math.random() * rouletteTerms.length);
-    animateRouletteSelection(termIndex);
+    // // Random term selection
+    // const termIndex = Math.floor(Math.random() * rouletteTerms.length);
+    // animateRouletteSelection(termIndex);
+  };
+
+  const onSpinEnd = (finalIndex: number) => {
+    const selected = rouletteTerms[finalIndex];
+    setSelectedTerm(selected);
+    setScore((prev) => prev + selected.points);
+    setTimeout(() => setShowExplanation(true), 300);
+    setSpinning(false);
   };
 
   return (
@@ -86,28 +89,34 @@ const LoanRoulette: React.FC = () => {
         <div className="score">Score: {score}</div>
       </div>
 
-      <div className="roulette-container">
-        <div
-          className="roulette-wheel"
-          style={{ transform: `rotate(${rotationDegree}deg)` }}
-        >
-          {rouletteTerms.map((term, index) => (
-            <div
-              key={term.id}
-              className={`roulette-segment ${selectedTerm?.id === term.id ? 'active' : ''}`}
-              style={{
-                transform: `rotate(${index * (360 / rouletteTerms.length)}deg)`
-              }}
-            >
-              <span className="term-text">{term.term}</span>
-            </div>
-          ))}
-        </div>
-        <div className="roulette-pointer"></div>
-      </div>
+      <SpinWheel
+        isSpinning={spinning}
+        onSpinEnd={onSpinEnd}
+        segments={rouletteTerms}
+        selectedTerm={selectedTerm}
+      />
+      {/*<div className="roulette-container">*/}
+      {/*  <div*/}
+      {/*    className="roulette-wheel"*/}
+      {/*    style={{ transform: `rotate(${rotationDegree}deg)` }}*/}
+      {/*  >*/}
+      {/*    {rouletteTerms.map((term, index) => (*/}
+      {/*      <div*/}
+      {/*        key={term.id}*/}
+      {/*        className={`roulette-segment ${selectedTerm?.id === term.id ? "active" : ""}`}*/}
+      {/*        style={{*/}
+      {/*          transform: `rotate(${index * (360 / rouletteTerms.length)}deg)`,*/}
+      {/*        }}*/}
+      {/*      >*/}
+      {/*        <span className="term-text">{term.term}</span>*/}
+      {/*      </div>*/}
+      {/*    ))}*/}
+      {/*  </div>*/}
+      {/*  <div className="roulette-pointer"></div>*/}
+      {/*</div>*/}
 
       {selectedTerm && (
-        <div className={`result ${showExplanation ? 'show' : ''}`}>
+        <div className={`result ${showExplanation ? "show" : ""}`}>
           <h3>You landed on: {selectedTerm.term}</h3>
           <div className="points">+{selectedTerm.points} points!</div>
           {showExplanation && (
@@ -119,11 +128,11 @@ const LoanRoulette: React.FC = () => {
       )}
 
       <button
-        className={`spin-button ${spinning ? 'disabled' : ''}`}
+        className={`spin-button ${spinning ? "disabled" : ""}`}
         onClick={spinRoulette}
         disabled={spinning}
       >
-        {spinning ? 'Spinning...' : 'Spin the Wheel'}
+        {spinning ? "Spinning..." : "Spin the Wheel"}
       </button>
     </div>
   );
