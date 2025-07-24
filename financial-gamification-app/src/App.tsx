@@ -1,19 +1,22 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import TermMatchingGame from './components/games/TermMatchingGame';
+import LoanDiceGame from './components/games/loan-dice-game/LoanDiceGame';
+import LoanRoulette from './components/games/loan-roulette/LoanRoulette';
 import { AccessibilityProvider } from './contexts/AccessibilityContext';
 import { StyleProvider } from './contexts/StyleContext';
 import { ChatProvider } from './contexts/ChatContext';
 import { ChatUI } from './components/chat/ChatUI';
-import StyleSelector from './components/style/StyleSelector';
+import { StyleSelector } from './components/style/StyleSelector';
+import GameTransition from './components/common/GameTransition';
 import './App.css';
 
 const App: React.FC = () => {
   return (
-    <StyleProvider>
-      <AccessibilityProvider>
-        <ChatProvider>
-          <Router>
+    <Router>
+      <StyleProvider>
+        <AccessibilityProvider>
+          <ChatProvider>
             <div className="app">
               <header className="app-header">
                 <h1>Financial Learning Games</h1>
@@ -22,6 +25,8 @@ const App: React.FC = () => {
                   <ul>
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/term-matching">Term Matching</Link></li>
+                    <li><Link to="/loan-dice">Loan Dice</Link></li>
+                    <li><Link to="/loan-roulette">Loan Roulette</Link></li>
                     <li><Link to="/chat-assistant">Chat Assistant</Link></li>
                   </ul>
                 </nav>
@@ -38,6 +43,14 @@ const App: React.FC = () => {
                           <h3>Term Matching Game</h3>
                           <p>Match financial terms with their definitions</p>
                         </Link>
+                        <Link to="/loan-dice" className="game-option">
+                          <h3>Loan Dice Game</h3>
+                          <p>Roll the dice to learn about loans and financial terms</p>
+                        </Link>
+                        <Link to="/loan-roulette" className="game-option">
+                          <h3>Loan Roulette</h3>
+                          <p>Spin the wheel and test your loan knowledge</p>
+                        </Link>
                         <Link to="/chat-assistant" className="game-option">
                           <h3>AI Chat Assistant</h3>
                           <p>Get personalized financial guidance from AI personas</p>
@@ -45,8 +58,34 @@ const App: React.FC = () => {
                       </div>
                     </div>
                   } />
-                  <Route path="/term-matching" element={<TermMatchingGame />} />
-                  <Route path="/chat-assistant" element={<ChatUI />} />
+                  <Route path="/term-matching" element={
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <GameTransition>
+                        <TermMatchingGame />
+                      </GameTransition>
+                    </Suspense>
+                  } />
+                  <Route path="/loan-dice" element={
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <GameTransition>
+                        <LoanDiceGame />
+                      </GameTransition>
+                    </Suspense>
+                  } />
+                  <Route path="/loan-roulette" element={
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <GameTransition>
+                        <LoanRoulette />
+                      </GameTransition>
+                    </Suspense>
+                  } />
+                  <Route path="/chat-assistant" element={
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <GameTransition>
+                        <ChatUI />
+                      </GameTransition>
+                    </Suspense>
+                  } />
                 </Routes>
               </main>
 
@@ -54,10 +93,10 @@ const App: React.FC = () => {
                 <p>&copy; 2025 Financial Learning Games. All rights reserved.</p>
               </footer>
             </div>
-          </Router>
-        </ChatProvider>
-      </AccessibilityProvider>
-    </StyleProvider>
+          </ChatProvider>
+        </AccessibilityProvider>
+      </StyleProvider>
+    </Router>
   );
 };
 
