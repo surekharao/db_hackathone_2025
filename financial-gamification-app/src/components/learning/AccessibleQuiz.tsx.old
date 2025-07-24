@@ -1,0 +1,315 @@
+import React, { useState, useEffect } from 'react';
+import { useAccessibility } from '../../contexts/AccessibilityContext';
+import { useStyle } from '../../contexts/StyleContext';
+import './AccessibleQuiz.css';
+
+interface QuizQuestion {
+  id: string;
+  question: string;
+  options: string[];
+  correctAnswer: number;
+  explanation: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+  category: string;
+  hints?: string[];
+}
+
+const sampleQuestions: QuizQuestion[] = [
+  {
+    id: '1',
+    question: 'What is a stock dividend?',
+    options: [
+      'A cash payment from company profits',
+      'A distribution of additional shares to stockholders',
+      'A type of bond',
+      'A stock market index'
+    ],
+    correctAnswer: 1,
+    explanation: 'A stock dividend is when a company distributes additional shares to existing shareholders instead of cash dividends.',
+    difficulty: 'easy',
+    category: 'Stocks',
+    hints: ['Think about how companies can reward shareholders', 'It involves receiving more of what you already own']
+  },
+  {
+    id: '2',
+    question: 'What does ROI stand for?',
+    options: [
+      'Return On Investment',
+      'Rate Of Interest',
+      'Risk Of Investment',
+      'Return On Income'
+    ],
+    correctAnswer: 0,
+    explanation: 'ROI (Return On Investment) measures the profitability of an investment relative to its cost.',
+    difficulty: 'easy',
+    category: 'Investment Basics',
+    hints: ['This is a common metric used to evaluate investments', 'It measures how much you get back compared to what you put in']
+  }
+];
+
+const AccessibleQuiz: React.FC = () => {
+  const { settings, speak } = useAccessibility();
+  const { settings: styleSettings } = useStyle();
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [showExplanation, setShowExplanation] = useState(false);
+  const [score, setScore] = useState(0);
+  const [questions, setQuestions] = useState<QuizQuestion[]>([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [showExplanation, setShowExplanation] = useState(false);
+  const [score, setScore] = useState(0);
+  const [questions, setQuestions] = useState<QuizQuestion[]>([]);
+  const [hintsUsed, setHintsUsed] = useState(0);
+
+  useEffect(() => {
+    // Randomize questions order
+    setQuestions([...sampleQuestions].sort(() => Math.random() - 0.5));
+  }, []);
+
+  useEffect(() => {
+    if (settings.readAloud && questions[currentQuestionIndex]) {
+      speak(questions[currentQuestionIndex].question);
+    }
+  }, [currentQuestionIndex, questions, settings.readAloud, speak]);
+
+  const handleAnswerSelect = (index: number) => {
+    setSelectedAnswer(index);
+    if (settings.readAloud) {
+      speak(questions[currentQuestionIndex].options[index]);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (selectedAnswer === null) return;
+
+    const currentQuestion = questions[currentQuestionIndex];
+    const isCorrect = selectedAnswer === currentQuestion.correctAnswer;
+
+    if (isCorrect) {
+      setScore(score + 1);
+      if (settings.readAloud) {
+        speak('Correct! ' + currentQuestion.explanation);
+      }
+    } else {
+      if (settings.readAloud) {
+        speak('Incorrect. ' + currentQuestion.explanation);
+      }
+    }
+
+    setShowExplanation(true);
+  };
+
+  const handleNext = () => {
+    setSelectedAnswer(null);
+    setShowExplanation(false);
+    setHintsUsed(0);
+    setCurrentQuestionIndex(prev => prev + 1);
+  };
+
+  const handleRestart = () => {
+    setQuestions([...sampleQuestions].sort(() => Math.random() - 0.5));
+    setCurrentQuestionIndex(0);
+    setSelectedAnswer(null);
+    setShowExplanation(false);
+    setScore(0);
+    setHintsUsed(0);
+  };
+
+  const handleHint = () => {
+    const currentQuestion = questions[currentQuestionIndex];
+    if (currentQuestion.hints && hintsUsed < currentQuestion.hints.length) {
+      if (settings.readAloud) {
+        speak(currentQuestion.hints[hintsUsed]);
+      }
+      setHintsUsed(prev => prev + 1);
+    }
+  };
+
+  if (!questions.length) return <div>Loading...</div>;
+
+  const currentQuestion = questions[currentQuestionIndex];
+  const isQuizComplete = currentQuestionIndex >= questions.length;
+
+  if (isQuizComplete) {
+    return (
+      <div className="quiz-complete" role="alert">
+        <h2>Quiz Complete! 🎉</h2>
+        <p className="final-score">Your Score: {score}/{questions.length}</p>
+        <p className="score-message">
+          {score === questions.length 
+            ? 'Perfect score! Excellent work!' 
+            : score >= questions.length / 2 
+              ? 'Good job! Keep learning!'
+              : 'Keep practicing to improve your score!'}
+        </p>
+        <button 
+          className="game-button restart-button"
+          onClick={handleRestart}
+          aria-label="Restart quiz"
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useState(0);
+  const [showExplanation, setShowExplanation] = useState(false);
+  const [hintsUsed, setHintsUsed] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+
+  const sampleQuestions: QuizQuestion[] = [
+    {
+      id: '1',
+      question: 'What is a stock?',
+      options: [
+        'A type of soup',
+        'A piece of ownership in a company',
+        'A type of bond',
+        'A savings account'
+      ],
+      correctAnswer: 1,
+      explanation: 'A stock represents ownership in a company. When you buy a stock, you become a shareholder and own a small piece of that company.',
+      difficulty: 'beginner',
+      category: 'basics',
+      hints: [
+        'Think about ownership',
+        'It\'s related to companies',
+        'It can be bought and sold on exchanges'
+      ],
+      visualAid: '📈'
+    }
+    // Add more questions...
+  ];
+
+  useEffect(() => {
+    if (settings.readAloud) {
+      speak(sampleQuestions[currentQuestion].question);
+    }
+  }, [currentQuestion, settings.readAloud]);
+
+  const handleAnswerSelect = (answerIndex: number) => {
+    setSelectedAnswer(answerIndex);
+    setShowExplanation(true);
+
+    if (answerIndex === sampleQuestions[currentQuestion].correctAnswer) {
+      setScore(prev => prev + (1 - hintsUsed * 0.2)); // Reduce score based on hints used
+      if (settings.readAloud) {
+        speak('Correct answer! ' + sampleQuestions[currentQuestion].explanation);
+      }
+    } else {
+      if (settings.readAloud) {
+        speak('Incorrect. ' + sampleQuestions[currentQuestion].explanation);
+      }
+    }
+  };
+
+  const useHint = () => {
+    const currentHints = sampleQuestions[currentQuestion].hints;
+    if (hintsUsed < currentHints.length) {
+      if (settings.readAloud) {
+        speak(currentHints[hintsUsed]);
+      }
+      setHintsUsed(prev => prev + 1);
+    }
+  };
+
+  const nextQuestion = () => {
+    if (currentQuestion < sampleQuestions.length - 1) {
+      setCurrentQuestion(prev => prev + 1);
+      setSelectedAnswer(null);
+      setShowExplanation(false);
+      setHintsUsed(0);
+    }
+  };
+
+  return (
+    <div className="accessible-quiz" role="main">
+      <div className="quiz-header">
+        <h1>Financial Knowledge Quiz</h1>
+        <div className="quiz-controls">
+          <button
+            onClick={() => settings.readAloud && speak(sampleQuestions[currentQuestion].question)}
+            aria-label="Read question aloud"
+            className="control-button"
+          >
+            🔊
+          </button>
+          <button
+            onClick={useHint}
+            disabled={hintsUsed >= sampleQuestions[currentQuestion].hints.length}
+            aria-label={`Use hint (${sampleQuestions[currentQuestion].hints.length - hintsUsed} remaining)`}
+            className="control-button"
+          >
+            💡
+          </button>
+        </div>
+      </div>
+
+      <div className="quiz-progress" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={(currentQuestion + 1) * 100 / sampleQuestions.length}>
+        Question {currentQuestion + 1} of {sampleQuestions.length}
+      </div>
+
+      <div className="quiz-content">
+        <div className="question-section">
+          <h2 id="current-question">{sampleQuestions[currentQuestion].question}</h2>
+          {sampleQuestions[currentQuestion].visualAid && (
+            <div className="visual-aid" aria-hidden="true">
+              {sampleQuestions[currentQuestion].visualAid}
+            </div>
+          )}
+        </div>
+
+        <div className="options-section" role="radiogroup" aria-labelledby="current-question">
+          {sampleQuestions[currentQuestion].options.map((option, index) => (
+            <button
+              key={index}
+              onClick={() => handleAnswerSelect(index)}
+              className={`option-button ${
+                selectedAnswer === index
+                  ? index === sampleQuestions[currentQuestion].correctAnswer
+                    ? 'correct'
+                    : 'incorrect'
+                  : ''
+              }`}
+              disabled={showExplanation}
+              aria-checked={selectedAnswer === index}
+              role="radio"
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+
+        {hintsUsed > 0 && (
+          <div className="hints-used" role="note">
+            Current hints used: {hintsUsed}
+          </div>
+        )}
+
+        {showExplanation && (
+          <div className="explanation" role="alert">
+            <h3>Explanation:</h3>
+            <p>{sampleQuestions[currentQuestion].explanation}</p>
+            <button
+              onClick={nextQuestion}
+              className="next-button"
+              aria-label="Next question"
+            >
+              Next Question →
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div className="quiz-footer">
+        <div className="score" role="status">
+          Current Score: {score.toFixed(1)}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AccessibleQuiz;

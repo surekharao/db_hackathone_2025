@@ -1,0 +1,218 @@
+.term-matching-game {
+  padding: var(--space-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.term-matching-game h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: var(--space-xl);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glow 2s ease-in-out infinite;
+}
+
+.instructions {
+  background: var(--card-bg);
+  padding: var(--space-lg);
+  border-radius: 16px;
+  margin-bottom: var(--space-xl);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(10px);
+}
+
+.game-score {
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: var(--space-xl);
+  padding: var(--space-md);
+  background: var(--card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  color: var(--game-accent);
+  display: flex;
+  justify-content: center;
+  gap: var(--space-xl);
+  animation: float 3s ease-in-out infinite;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.terms-column,
+.definitions-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.terms-column h3,
+.definitions-column h3 {
+  color: var(--game-secondary);
+  margin-bottom: var(--space-md);
+  font-size: 1.5rem;
+}
+
+.term-card,
+.definition-card {
+  padding: var(--space-lg);
+  border: 2px solid var(--card-border);
+  border-radius: 12px;
+  background: var(--card-bg);
+  cursor: pointer;
+  text-align: left;
+  font-size: 1.1rem;
+  transition: all var(--animation-speed-normal) ease;
+  position: relative;
+  backdrop-filter: blur(5px);
+}
+
+.term-card:hover:not(:disabled),
+.definition-card:hover:not(:disabled) {
+  transform: translateY(-5px);
+  box-shadow: var(--hover-glow);
+  border-color: var(--game-primary);
+}
+
+.term-card.selected,
+.definition-card.selected {
+  background: var(--gradient-primary);
+  color: white;
+  border-color: var(--game-secondary);
+}
+
+.term-card.matched,
+.definition-card.matched {
+  background: var(--gradient-secondary);
+  color: white;
+  border-color: var(--game-success);
+  cursor: default;
+  animation: success-pulse 2s ease-in-out infinite;
+}
+
+.difficulty-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: var(--gradient-primary);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  box-shadow: var(--hover-glow);
+  animation: float var(--animation-speed-slow) ease-in-out infinite;
+}
+
+.game-complete {
+  text-align: center;
+  padding: var(--space-xl);
+  background: var(--card-bg);
+  border-radius: 16px;
+  animation: success-complete 0.5s ease-in-out;
+  border: 2px solid var(--game-success);
+  backdrop-filter: blur(10px);
+}
+
+.game-complete h3 {
+  color: var(--game-success);
+  font-size: 2rem;
+  margin-bottom: var(--space-md);
+}
+
+.new-game-button {
+  padding: var(--space-md) var(--space-xl);
+  font-size: 1.2rem;
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all var(--animation-speed-normal) ease;
+  margin-top: var(--space-lg);
+}
+
+.new-game-button:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--hover-glow);
+}
+
+@keyframes success-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+@keyframes success-complete {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .term-matching-game {
+    padding: var(--space-md);
+  }
+
+  .game-board {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .term-card,
+  .definition-card {
+    font-size: 1rem;
+    padding: var(--space-md);
+  }
+
+  .game-complete {
+    padding: var(--space-lg);
+  }
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  .term-card,
+  .definition-card,
+  .game-complete,
+  .difficulty-badge {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .term-card,
+  .definition-card {
+    background: #000000;
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+  }
+
+  .term-card.selected,
+  .definition-card.selected {
+    background: #FFFFFF;
+    color: #000000;
+  }
+
+  .term-card.matched,
+  .definition-card.matched {
+    background: #00FF00;
+    color: #000000;
+  }
+}

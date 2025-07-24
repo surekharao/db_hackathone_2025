@@ -1,0 +1,157 @@
+/* Game Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 5px rgba(108, 92, 231, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(108, 92, 231, 0.4); }
+  100% { box-shadow: 0 0 5px rgba(108, 92, 231, 0.2); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Base Theme */
+:root {
+  --game-primary: #6C5CE7;
+  --game-secondary: #A3A1FF;
+  --game-accent: #FF6B6B;
+  --game-success: #00B894;
+  --game-warning: #FFEAA7;
+  --game-error: #FF7675;
+  
+  --gradient-primary: linear-gradient(135deg, #6C5CE7 0%, #A3A1FF 100%);
+  --gradient-secondary: linear-gradient(135deg, #FF6B6B 0%, #FFA07A 100%);
+  
+  --card-bg: rgba(255, 255, 255, 0.1);
+  --card-border: rgba(255, 255, 255, 0.2);
+  --hover-glow: 0 0 20px rgba(108, 92, 231, 0.4);
+}
+
+/* Modern Game UI Base Styles */
+body {
+  margin: 0;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #1A1A2E;
+  color: #FFFFFF;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Modern Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--game-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--game-secondary);
+}
+
+/* Game UI Elements */
+.game-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--hover-glow);
+}
+
+.game-button {
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.game-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--hover-glow);
+}
+
+.game-badge {
+  background: var(--gradient-secondary);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  :root {
+    --space-xl: 1.5rem;
+    --space-lg: 1rem;
+    --space-md: 0.75rem;
+    --space-sm: 0.5rem;
+    --space-xs: 0.25rem;
+  }
+  
+  .game-card {
+    padding: var(--space-md);
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  :root {
+    --game-primary: #FFFFFF;
+    --game-secondary: #000000;
+    --gradient-primary: none;
+    --gradient-secondary: none;
+    --card-bg: #000000;
+    --card-border: #FFFFFF;
+  }
+  
+  .game-button,
+  .game-badge {
+    background: #FFFFFF;
+    color: #000000;
+  }
+}

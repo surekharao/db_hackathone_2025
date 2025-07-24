@@ -1,0 +1,166 @@
+.term-matching-game {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.instructions {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+body.high-contrast .instructions {
+  background: #333;
+  color: #fff;
+}
+
+.game-score {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: #e9ecef;
+  border-radius: 8px;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.terms-column,
+.definitions-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.term-card,
+.definition-card {
+  padding: 1rem;
+  border: 2px solid #2c3e50;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  text-align: left;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+body.high-contrast .term-card,
+body.high-contrast .definition-card {
+  background: #333;
+  color: #fff;
+  border-color: #fff;
+}
+
+.term-card:hover:not(:disabled),
+.definition-card:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.term-card.selected,
+.definition-card.selected {
+  background: #3498db;
+  color: white;
+  border-color: #2980b9;
+}
+
+body.high-contrast .term-card.selected,
+body.high-contrast .definition-card.selected {
+  background: #fff;
+  color: #000;
+}
+
+.term-card.matched,
+.definition-card.matched {
+  background: #2ecc71;
+  color: white;
+  border-color: #27ae60;
+  cursor: default;
+}
+
+body.high-contrast .term-card.matched,
+body.high-contrast .definition-card.matched {
+  background: #00ff00;
+  color: #000;
+}
+
+.difficulty-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #fff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.game-complete {
+  text-align: center;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  animation: fadeIn 0.5s ease;
+}
+
+body.high-contrast .game-complete {
+  background: #333;
+  color: #fff;
+}
+
+.new-game-button {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  background: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.new-game-button:hover {
+  background: #1a252f;
+}
+
+body.high-contrast .new-game-button {
+  background: #fff;
+  color: #000;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .game-board {
+    grid-template-columns: 1fr;
+  }
+  
+  .term-card,
+  .definition-card {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
