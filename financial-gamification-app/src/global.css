@@ -69,24 +69,10 @@ body {
   overflow-x: hidden;
 }
 
-/* Modern Scrollbar */
+/* Hide Scrollbar for mobile */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--game-primary);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--game-secondary);
+  width: 0;
+  height: 0;
 }
 
 /* Game UI Elements */

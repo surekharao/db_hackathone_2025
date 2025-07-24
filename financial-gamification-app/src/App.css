@@ -5,6 +5,8 @@
   background: radial-gradient(circle at top right, #2A2A5A 0%, #1A1A2E 100%);
   position: relative;
   overflow: hidden;
+  max-width: 390px;
+  margin: auto;
 }
 
 .app::before {
@@ -71,7 +73,6 @@ body.high-contrast .app-header {
   flex: 1;
   max-width: 1200px;
   margin: 0 auto;
-  width: 100%;
   padding: 2rem;
   position: relative;
   z-index: 1;
@@ -79,7 +80,6 @@ body.high-contrast .app-header {
 
 .home {
   text-align: center;
-  padding: 2rem;
 }
 
 .home h2 {
@@ -193,19 +193,6 @@ body.high-contrast .app-header nav a:hover,
 body.high-contrast .app-header nav a:focus {
   background-color: #fff;
   color: #000;
-}
-
-.app-content {
-  flex: 1;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.home {
-  text-align: center;
-  padding: 2rem;
 }
 
 .game-options {

@@ -3,7 +3,7 @@ import { useChat } from '../../contexts/ChatContext';
 import { PersonaType } from '../../types/chat';
 import './ChatUI.css';
 
-export const ChatUI: React.FC = () => {
+const ChatUI: React.FC = () => {
   const { state, sendMessage, setPersona, clearChat } = useChat();
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -109,3 +109,5 @@ export const ChatUI: React.FC = () => {
     </div>
   );
 };
+
+export default ChatUI;
