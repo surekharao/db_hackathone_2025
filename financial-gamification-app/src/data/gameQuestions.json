@@ -1,0 +1,30 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is compound interest?",
+      "answer": "Interest earned on both the initial principal and previously accumulated interest",
+      "difficulty": "easy",
+      "category": "basics",
+      "points": 100
+    },
+    {
+      "id": "loan-1",
+      "category": "Loans",
+      "name": "Interest Rates",
+      "question": "What is APR and how does it affect loan payments?",
+      "explanation": "APR (Annual Percentage Rate) represents the yearly cost of borrowing, including interest and fees. A higher APR means higher monthly payments and more total cost over the loan term.",
+      "points": 100,
+      "difficulty": "basic"
+    },
+    {
+      "id": "loan-2",
+      "category": "Loans",
+      "name": "Loan Terms",
+      "question": "How does the loan term affect your monthly payments?",
+      "explanation": "A longer loan term typically results in lower monthly payments but higher total interest paid over time. Shorter terms mean higher monthly payments but less total interest.",
+      "points": 150,
+      "difficulty": "intermediate"
+    }
+  ]
+}

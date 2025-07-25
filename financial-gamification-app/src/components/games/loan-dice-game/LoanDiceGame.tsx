@@ -2,6 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { LoanTopic, loanTopics } from '../../../data/loanTopics';
 import './LoanDiceGame.css';
 
+interface LeaderboardEntry {
+  name: string;
+  score: number;
+  xp: number;
+}
+
+interface PlayerStats {
+  totalXP: number;
+  level: number;
+  gamesPlayed: number;
+}
+
 const LoanDiceGame: React.FC = () => {
   const [currentTopic, setCurrentTopic] = useState<LoanTopic | null>(null);
   const [diceValue, setDiceValue] = useState<number>(1);
@@ -11,6 +23,24 @@ const LoanDiceGame: React.FC = () => {
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
   const [isRolling, setIsRolling] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
+  const [showLeaderboard, setShowLeaderboard] = useState<boolean>(false);
+  const [playerName, setPlayerName] = useState<string>(() => 
+    localStorage.getItem('playerName') || '');
+  
+  const [playerStats, setPlayerStats] = useState<PlayerStats>(() => {
+    const saved = localStorage.getItem('playerStats');
+    return saved ? JSON.parse(saved) : {
+      totalXP: 0,
+      level: 1,
+      gamesPlayed: 0
+    };
+  });
+
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>(() => {
+    const saved = localStorage.getItem('diceGameLeaderboard');
+    return saved ? JSON.parse(saved) : [];
+  });
+
   const [highScore, setHighScore] = useState<number>(() => {
     const saved = localStorage.getItem('loanDiceHighScore');
     return saved ? parseInt(saved, 10) : 0;
@@ -86,28 +116,80 @@ const LoanDiceGame: React.FC = () => {
     }
   };
 
+  const calculateXP = (points: number): number => {
+    return Math.floor(points * (1 + streak * 0.1));
+  };
+
+  const updatePlayerStats = (earnedXP: number) => {
+    const newStats = { ...playerStats };
+    newStats.totalXP += earnedXP;
+    newStats.gamesPlayed += 1;
+    
+    // Level up every 1000 XP
+    const newLevel = Math.floor(newStats.totalXP / 1000) + 1;
+    if (newLevel > newStats.level) {
+      setMessage(prev => `${prev} 🎉 Level Up! Now level ${newLevel}!`);
+    }
+    newStats.level = newLevel;
+    
+    setPlayerStats(newStats);
+    localStorage.setItem('playerStats', JSON.stringify(newStats));
+  };
+
+  const updateLeaderboard = () => {
+    if (!playerName) return;
+    
+    const newEntry: LeaderboardEntry = {
+      name: playerName,
+      score: score,
+      xp: playerStats.totalXP
+    };
+
+    const newLeaderboard = [...leaderboard, newEntry]
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 10);
+
+    setLeaderboard(newLeaderboard);
+    localStorage.setItem('diceGameLeaderboard', JSON.stringify(newLeaderboard));
+  };
+
   return (
     <div className="loan-dice-game">
-      <div className="game-header">
-        <h2>Loan Learning Dice Game</h2>
-        <div className="score">Score: {score}</div>
-      </div>
+      <div className="game-layout">
+        <div className="game-main">
+          <div className="game-header">
+            <div className="player-info">
+              <div className="level-badge">Level {playerStats.level}</div>
+              <div className="xp-bar">
+                <div 
+                  className="xp-progress" 
+                  style={{ width: `${(playerStats.totalXP % 1000) / 10}%` }}
+                ></div>
+                <span>{playerStats.totalXP} XP</span>
+              </div>
+            </div>
+            <div className="header-stats">
+              <div className="score">Score: {score}</div>
+              <div className="high-score">Best: {highScore}</div>
+            </div>
+          </div>
 
-      <div className="dice-container">
-        <div className={`dice ${isRolling ? 'rolling' : ''}`}>
-          {[...Array(diceValue)].map((_, i) => (
-            <div key={i} className="dot" />
-          ))}
-        </div>
-      </div>
+          <div className="game-content">
+            <div className="dice-container">
+              <div className={`dice ${isRolling ? 'rolling' : ''}`}>
+                {[...Array(diceValue)].map((_, i) => (
+                  <div key={i} className="dot" />
+                ))}
+              </div>
+            </div>
 
-      <button 
-        className="roll-button game-button"
-        onClick={rollDice}
-        disabled={isRolling}
-      >
-        {isRolling ? 'Rolling...' : 'Roll Dice'}
-      </button>
+            <button 
+              className="roll-button game-button"
+              onClick={rollDice}
+              disabled={isRolling}
+            >
+              {isRolling ? 'Rolling...' : 'Roll Dice'}
+            </button>
 
       {message && (
         <div className={`message ${currentTopic ? 'success' : 'info'}`}>
@@ -149,6 +231,9 @@ const LoanDiceGame: React.FC = () => {
         <p>Roll the dice to learn about loans! Get 4 or higher to reveal a question.</p>
         <p>Answer questions correctly to earn points and master loan concepts.</p>
       </div>
+    </div>
+    </div>
+    </div>
     </div>
   );
 };

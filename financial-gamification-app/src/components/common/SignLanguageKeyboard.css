@@ -1,0 +1,302 @@
+/* Sign Language Keyboard Styling */
+.sign-language-keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: var(--light-surface);
+  border-radius: 12px;
+  max-height: 180px; /* Adjusted height */
+  overflow: hidden;
+}
+
+.sign-categories {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--light-border);
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.sign-categories::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.category-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  background: var(--light-surface-variant);
+  border: 1px solid var(--light-border);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.category-button.active {
+  background: var(--light-primary);
+  color: var(--light-on-primary);
+  border-color: var(--light-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-icon {
+  font-size: 1rem;
+}
+
+.category-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.sign-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+  gap: 0.5rem;
+  padding: 0.5rem;
+  overflow-y: auto;
+  max-height: 120px; /* Grid height */
+  scrollbar-width: thin;
+  scrollbar-color: var(--light-primary) transparent;
+}
+
+.sign-grid::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sign-grid::-webkit-scrollbar-thumb {
+  background-color: var(--light-primary);
+  border-radius: 10px;
+}
+
+.sign-key {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.5rem;
+  background: var(--light-input);
+  border: 1px solid var(--light-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 65px;
+  position: relative;
+}
+
+.sign-key:hover {
+  background: var(--light-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sign-display {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sign-display img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 0.2s;
+}
+
+.sign-text-fallback {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--light-primary);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+.label {
+  font-size: 0.75rem;
+  text-align: center;
+  color: var(--light-text-secondary);
+  font-weight: 500;
+}
+
+.sign-description {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--light-surface);
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.sign-key:hover .sign-description {
+  opacity: 1;
+}
+
+/* Theme support */
+[data-theme="dark"] .sign-language-keyboard {
+  background: var(--dark-surface);
+}
+
+[data-theme="dark"] .category-button {
+  background: var(--dark-surface-variant);
+  border-color: var(--dark-border);
+  color: var(--dark-text);
+}
+
+[data-theme="dark"] .category-button.active {
+  background: var(--dark-primary);
+  color: var(--dark-on-primary);
+  border-color: var(--dark-primary);
+}
+
+[data-theme="dark"] .sign-key {
+  background: var(--dark-input);
+  border-color: var(--dark-border);
+  color: var(--dark-text);
+}
+
+[data-theme="dark"] .sign-key:hover {
+  background: var(--dark-hover);
+}
+
+[data-theme="dark"] .sign-text-fallback {
+  color: var(--dark-primary);
+}
+
+[data-theme="dark"] .label {
+  color: var(--dark-text-secondary);
+}
+
+[data-theme="dark"] .sign-description {
+  background: var(--dark-surface);
+  border-color: var(--dark-border);
+  color: var(--dark-text);
+}
+
+/* Contrast theme */
+[data-theme="contrast"] .sign-language-keyboard {
+  background: var(--contrast-surface);
+}
+
+[data-theme="contrast"] .category-button {
+  background: var(--contrast-surface-variant);
+  border: 2px solid var(--contrast-border);
+  color: var(--contrast-text);
+}
+
+[data-theme="contrast"] .category-button.active {
+  background: var(--contrast-primary);
+  color: var(--contrast-on-primary);
+  border-color: var(--contrast-primary);
+}
+
+[data-theme="contrast"] .sign-key {
+  background: var(--contrast-input);
+  border: 2px solid var(--contrast-border);
+  color: var(--contrast-text);
+}
+
+[data-theme="contrast"] .sign-key:hover {
+  background: var(--contrast-hover);
+  outline: 2px solid var(--contrast-primary);
+}
+
+[data-theme="contrast"] .sign-text-fallback {
+  color: var(--contrast-primary);
+}
+
+[data-theme="contrast"] .label {
+  color: var(--contrast-text);
+  font-weight: 700;
+}
+
+[data-theme="contrast"] .sign-description {
+  background: var(--contrast-surface);
+  border: 2px solid var(--contrast-border);
+  color: var(--contrast-text);
+}
+
+/* High Contrast Mode */
+body.high-contrast .sign-key {
+  background: #000;
+  border-color: #fff;
+}
+
+body.high-contrast .sign-key img {
+  filter: invert(1);
+}
+
+body.high-contrast .sign-description {
+  background: #000;
+  border-color: #fff;
+  color: #fff;
+}
+
+/* Animation */
+@keyframes signKeyPress {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.sign-key:active {
+  animation: signKeyPress 0.2s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sign-grid {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .sign-key img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .sign-key .label {
+    font-size: 0.8rem;
+  }
+
+  .sign-description {
+    display: none;
+  }
+}
+
+/* Accessibility */
+.sign-key:focus {
+  outline: none;
+  box-shadow: 
+    0 0 0 2px var(--surface),
+    0 0 0 4px var(--primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sign-key,
+  .sign-description {
+    transition: none;
+  }
+  
+  .sign-key:active {
+    animation: none;
+  }
+}

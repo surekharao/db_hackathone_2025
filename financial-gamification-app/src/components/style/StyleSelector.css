@@ -24,22 +24,40 @@
   color: var(--text-primary);
 }
 
+/* Overlay for closing menu when clicking outside */
+.style-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: 999;
+}
+
 .style-selector {
   position: fixed;
-  right: -320px;
-  top: 0;
-  width: 300px;
-  height: 100vh;
-  background: var(--bg-secondary);
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
-  padding: 1rem;
-  transition: right 0.3s ease;
-  z-index: 999;
-  overflow-y: auto;
+  right: 20px;
+  top: 70px;
+  width: 320px;
+  background: var(--bg-primary);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  
+  /* Hidden by default */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px) scale(0.95);
+  transition: all 0.3s ease;
 }
 
 .style-selector.open {
-  right: 0;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
 }
 
 .style-selector-header {
@@ -167,7 +185,16 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .style-selector {
+    right: 10px;
+    top: 60px;
+    width: calc(100vw - 20px);
+    max-width: 300px;
     padding: 1rem;
+  }
+
+  .style-menu-toggle {
+    right: 10px;
+    top: 10px;
   }
 
   .persona-options,
@@ -180,6 +207,10 @@
   .font-button,
   .theme-button {
     width: 100%;
+  }
+
+  .style-selector-header h3 {
+    font-size: 1.1rem;
   }
 }
 

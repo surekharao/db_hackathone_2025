@@ -1,0 +1,331 @@
+.chat-input-area {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  background: var(--surface);
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.keypad-container {
+  width: 280px;
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  left: 50%;
+  bottom: 130px;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: none;
+}
+
+.keypad-container.visible {
+  display: block;
+}
+
+.keypad-container.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-8px);
+}
+
+body.high-contrast .keypad-container {
+  background: #000;
+  border: 2px solid #fff;
+}
+
+.keypad-language-selector {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.keypad-language-selector::-webkit-scrollbar {
+  display: none;
+}
+
+.language-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--on-surface);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.language-button.active {
+  background: var(--primary);
+  color: var(--on-primary);
+  border-color: var(--primary);
+}
+
+.sign-language-toggle {
+  padding: 0.5rem;
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--on-surface);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.sign-language-toggle.active {
+  background: var(--primary);
+  color: var(--on-primary);
+  border-color: var(--primary);
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  background: var(--surface-variant);
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.keypad-button {
+  aspect-ratio: 1;
+  position: relative;
+  border: none;
+  background: var(--surface);
+  color: var(--on-surface);
+  font-size: 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--outline);
+  padding: 0;
+}
+
+.keypad-button .number {
+  font-size: 1.4rem;
+  font-family: var(--font-multilingual, 'Arial'), sans-serif;
+}
+
+.keypad-button .sign {
+  position: absolute;
+  top: -85px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface);
+  padding: 0.75rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 100;
+}
+
+.keypad-button .sign::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--surface);
+}
+
+.keypad-button .sign::before {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid var(--border-color);
+  z-index: -1;
+}
+
+.keypad-button .translation {
+  display: block;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+  font-family: var(--font-multilingual);
+}
+
+.keypad-button:hover .sign,
+.keypad-button:focus .sign,
+.keypad-button:focus-within .sign {
+  opacity: 1;
+  visibility: visible;
+  top: -95px;
+  transform: translateX(-50%) scale(1.05);
+}
+
+.keypad-button .sign img {
+  width: 48px;
+  height: 48px;
+  display: block;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* Enhanced focus states for accessibility */
+.keypad-button:focus {
+  outline: none;
+  box-shadow: 
+    0 0 0 2px var(--surface),
+    0 0 0 4px var(--primary);
+}
+
+body.high-contrast .keypad-button:focus {
+  box-shadow: 
+    0 0 0 2px #000,
+    0 0 0 4px #fff;
+}
+
+/* Animation for sign language tooltips */
+@keyframes signAppear {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+.keypad-button .sign.visible {
+  animation: signAppear 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.keypad-button .sign img {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+/* Language specific styles */
+.keypad[data-language="hindi"] .number {
+  font-family: 'Noto Sans Devanagari', var(--font-multilingual, 'Arial'), sans-serif;
+}
+
+.keypad[data-language="chinese"] .number {
+  font-family: 'Noto Sans SC', var(--font-multilingual, 'Arial'), sans-serif;
+}
+
+.keypad-button:hover {
+  background: var(--surface-hover);
+  transform: translateY(-1px);
+}
+
+.keypad-button:active {
+  transform: translateY(1px);
+}
+
+.keypad-button.special {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.keypad-button.special:hover {
+  background: var(--primary-hover);
+}
+
+body.high-contrast .keypad-container {
+  background: #000;
+  border: 2px solid #fff;
+}
+
+body.high-contrast .keypad-button {
+  background: #000;
+  color: #fff;
+  border: 2px solid #fff;
+}
+
+body.high-contrast .keypad-button:hover {
+  background: #fff;
+  color: #000;
+}
+
+.keypad-display {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--outline);
+  border-radius: 8px;
+  font-size: 1.5rem;
+  text-align: right;
+  color: var(--on-surface);
+}
+
+body.high-contrast .keypad-display {
+  background: #000;
+  color: #fff;
+  border: 2px solid #fff;
+}
+
+.keypad-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  display: none;
+}
+
+.keypad-container.active .keypad-backdrop {
+  display: block;
+}
+
+.keypad-container.active {
+  z-index: 1000;
+}
+
+@media (max-width: 768px) {
+  .keypad-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    transform: none;
+    border-radius: 12px 12px 0 0;
+    padding: 1rem;
+  }
+  
+  .keypad {
+    gap: 0.5rem;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .keypad-button {
+    font-size: 1.2rem;
+    padding: 1rem;
+  }
+  
+  .chat-input-area {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+  }
+}
