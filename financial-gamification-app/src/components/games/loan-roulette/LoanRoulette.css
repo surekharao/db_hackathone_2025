@@ -698,90 +698,6 @@
   }
 }
 
-@media (max-width: 1024px) {
-  .game-area {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .roulette-section,
-  .result-section {
-    max-width: 100%;
-    width: 100%;
-  }
-
-  .result-section {
-    min-width: unset;
-    padding: 0 1rem;
-  }
-
-  .game-header h2 {
-    font-size: 2rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .loan-roulette {
-    padding: 0.5rem;
-  }
-
-  .game-header {
-    margin-bottom: 1rem;
-  }
-
-  .header-content {
-    padding: 0.5rem 1rem;
-  }
-
-  .game-stats {
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-  }
-
-  .score,
-  .round {
-    font-size: 1.2rem;
-    padding: 0.4rem 1rem;
-  }
-
-  .term-text {
-    font-size: 0.8rem;
-  }
-
-  .category-badge {
-    font-size: 0.7rem;
-    padding: 0.1rem 0.3rem;
-  }
-
-  .result-card {
-    padding: 1rem;
-  }
-
-  .term-header {
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: flex-start;
-  }
-
-  .term-header h3 {
-    font-size: 1.5rem;
-  }
-
-  .explanation-box {
-    padding: 1rem;
-  }
-
-  .explanation-box p {
-    font-size: 0.9rem;
-  }
-
-  .spin-button {
-    padding: 0.6rem 1.5rem;
-    font-size: 1rem;
-  }
-}
-
 /* Rainbow Wheel Styles */
 .roulette-wheel {
   position: relative;
@@ -878,23 +794,4 @@
   border: 4px solid var(--card-border);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   z-index: 5;
-}
-
-@media (max-width: 480px) {
-  .game-header h2 {
-    font-size: 1.5rem;
-  }
-
-  .term-text {
-    font-size: 0.7rem;
-  }
-
-  .category-badge {
-    display: none;
-  }
-
-  .points-badge {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-  }
 }
