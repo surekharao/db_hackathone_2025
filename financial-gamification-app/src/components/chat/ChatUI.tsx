@@ -20,7 +20,7 @@ const VIDEO_ICON = "/icons/video.svg";
 
 export const ChatUI: React.FC = () => {
   const { state, sendMessage, setPersona, clearChat } = useChat();
-  const prevValue = useRef("");
+  const prevInput = useRef("");
   const [input, setInput] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showVirtualKeyboard, setShowVirtualKeyboard] = useState(false);
@@ -43,6 +43,19 @@ export const ChatUI: React.FC = () => {
   useEffect(() => {
     scrollToBottom();
   }, [state.messages]);
+  const expandTextarea = () => {
+    const el = inputRef.current;
+    if (el) {
+      el.style.height = "auto"; // Reset first
+      el.style.height = `${el.scrollHeight - 16}px`; // Then adjust
+    }
+  };
+  useEffect(() => {
+    if (input !== prevInput.current) {
+      expandTextarea();
+      prevInput.current = input;
+    }
+  }, [input]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -131,7 +144,7 @@ export const ChatUI: React.FC = () => {
     const newText = [...words, suggestion].join(" ") + " ";
     setInput(newText);
     setSuggestions([]);
-    handleInput();
+    expandTextarea();
   };
 
   const personas: { id: PersonaType; name: string; avatar: string }[] = [
@@ -139,13 +152,6 @@ export const ChatUI: React.FC = () => {
     { id: "ai-coach", name: "Investment Coach", avatar: "👩‍🏫" },
     { id: "ai-tutor", name: "Finance Tutor", avatar: "🎓" },
   ];
-  const handleInput = () => {
-    const el = inputRef.current;
-    if (el) {
-      el.style.height = "auto"; // Reset first
-      el.style.height = `${el.scrollHeight - 16}px`; // Then adjust
-    }
-  };
 
   return (
     <div
@@ -341,7 +347,7 @@ export const ChatUI: React.FC = () => {
               placeholder="Type your message here..."
               rows={1}
               className="chat-input"
-              onInput={handleInput}
+              onInput={expandTextarea}
             />
             {suggestions.length > 0 && (
               <div className="suggestions-popup">
