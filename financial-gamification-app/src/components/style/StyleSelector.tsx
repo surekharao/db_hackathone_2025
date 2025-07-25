@@ -1,48 +1,14 @@
-import React, { useEffect } from 'react';
-import { useStyle } from '../../contexts/StyleContext';
-import './StyleSelector.css';
+import React from "react";
+import { useStyle } from "../../contexts/StyleContext";
+import "./StyleSelector.css";
+import AccessibilityMenu from "../AccessibilityMenu";
 
 export const StyleSelector: React.FC = () => {
   const { settings, updateSettings } = useStyle();
-  const [readyToRender, setReadyToRender] = useState(false);
-  useEffect(() => {
-    setReadyToRender(true);
-  }, []);
-  useEffect(() => {
-    if(settings.isStyleMenuOpen) {
-      document.body.style.overflow = "hidden";
-    }
-    else {
-      document.body.style.overflow = "auto";
-    }
-  }, [settings.isStyleMenuOpen]);
-
 
   const toggleStyleMenu = () => {
     updateSettings({ isStyleMenuOpen: !settings.isStyleMenuOpen });
   };
-
-  const handleThemeSelect = (theme: 'light' | 'dark' | 'high-contrast') => {
-    updateSettings({ theme, isStyleMenuOpen: false }); // Close menu after selection
-  };
-
-  const handleFontSizeSelect = (fontSize: 'normal' | 'large' | 'extra-large') => {
-    updateSettings({ fontSize, isStyleMenuOpen: false }); // Close menu after selection
-  };
-
-  // Handle keyboard events
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && settings.isStyleMenuOpen) {
-        updateSettings({ isStyleMenuOpen: false });
-      }
-    };
-
-    if (settings.isStyleMenuOpen) {
-      document.addEventListener('keydown', handleKeyDown);
-      return () => document.removeEventListener('keydown', handleKeyDown);
-    }
-  }, [settings.isStyleMenuOpen, updateSettings]);
 
   return (
     <>
@@ -59,91 +25,7 @@ export const StyleSelector: React.FC = () => {
           />
         </svg>
       </button>
-
-      {/* Overlay to close menu when clicking outside */}
-      {settings.isStyleMenuOpen && (
-        <div 
-          className="style-menu-overlay"
-          onClick={() => updateSettings({ isStyleMenuOpen: false })}
-        />
-      )}
-
-      <div className={`style-selector ${settings.isStyleMenuOpen ? 'open' : ''}`}>
-        <div className="style-selector-header">
-          <h3>Appearance Settings</h3>
-          <button 
-            className="close-button" 
-            onClick={toggleStyleMenu}
-            aria-label="Close style menu"
-          >
-            <div className="style-selector-header">
-              <h3>Appearance Settings</h3>
-              <button
-                className="close-button"
-                onClick={toggleStyleMenu}
-                aria-label="Close style menu"
-              >
-                ×
-              </button>
-            </div>
-
-        <div className="setting-group">
-          <label>Theme:</label>
-          <div className="theme-options">
-            <button
-              className={`theme-button light ${settings.theme === 'light' ? 'active' : ''}`}
-              onClick={() => handleThemeSelect('light')}
-              aria-label="Light theme"
-            >
-              <span className="theme-icon">☀️</span>
-              <span>Light</span>
-            </button>
-            <button
-              className={`theme-button dark ${settings.theme === 'dark' ? 'active' : ''}`}
-              onClick={() => handleThemeSelect('dark')}
-              aria-label="Dark theme"
-            >
-              <span className="theme-icon">🌙</span>
-              <span>Dark</span>
-            </button>
-            <button
-              className={`theme-button high-contrast ${settings.theme === 'high-contrast' ? 'active' : ''}`}
-              onClick={() => handleThemeSelect('high-contrast')}
-              aria-label="High contrast theme"
-            >
-              <span className="theme-icon">🎨</span>
-              <span>High Contrast</span>
-            </button>
-          </div>
-        </div>
-
-        <div className="setting-group">
-          <label>Font Size:</label>
-          <div className="font-size-options">
-            <button
-              className={`font-button ${settings.fontSize === 'normal' ? 'active' : ''}`}
-              onClick={() => handleFontSizeSelect('normal')}
-              aria-label="Normal text size"
-            >
-              A
-            </button>
-            <button
-              className={`font-button ${settings.fontSize === 'large' ? 'active' : ''}`}
-              onClick={() => handleFontSizeSelect('large')}
-              aria-label="Large text size"
-            >
-              A+
-            </button>
-            <button
-              className={`font-button ${settings.fontSize === 'extra-large' ? 'active' : ''}`}
-              onClick={() => handleFontSizeSelect('extra-large')}
-              aria-label="Extra large text size"
-            >
-              A++
-            </button>
-          </div>
-        </div>
-      </div>
+      <AccessibilityMenu />
     </>
   );
 };

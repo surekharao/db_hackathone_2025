@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-interface StyleSettings {
+export interface StyleSettings {
   theme: 'light' | 'dark' | 'high-contrast';
   fontSize: 'normal' | 'large' | 'extra-large';
   isStyleMenuOpen: boolean;

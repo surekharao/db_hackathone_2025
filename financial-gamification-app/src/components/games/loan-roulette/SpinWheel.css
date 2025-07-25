@@ -6,10 +6,6 @@
     display: block;
 }
 
-.spinning {
-    /* No additional rules; transition is handled by .wheel-svg */
-}
-
 .highlight {
     animation: pulse 1s infinite;
 }

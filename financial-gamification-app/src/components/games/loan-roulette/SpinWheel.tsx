@@ -2,20 +2,28 @@ import React, { useEffect, useRef, useState } from "react";
 import { RouletteTerm } from "./types";
 import "./SpinWheel.css";
 
-const colors = ["#6C5CE7", "#A3A1FF"];
+const sectionColors = [
+  '#FF0000', // Red
+  '#FF7F00', // Orange
+  '#e5e500', // Yellow
+  '#00FF00', // Green
+  '#0000FF', // Blue
+  '#4B0082', // Indigo
+  '#9400D3', // Violet
+];
 
 interface SpinWheelProps {
   isSpinning: boolean;
   onSpinEnd: (finalIndex: number) => void;
-  segments: RouletteTerm[];
-  selectedTerm: RouletteTerm | null;
+  segments: number[];
+  selectedNumber: number | null;
 }
 
 const SpinWheel = ({
   isSpinning,
   onSpinEnd,
   segments,
-  selectedTerm,
+  selectedNumber,
 }: SpinWheelProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState(0);
@@ -74,7 +82,7 @@ const SpinWheel = ({
       setRotation(totalRotation);
 
       setTimeout(() => {
-        onSpinEnd(winningSegment - 1);
+        onSpinEnd(winningSegment);
       }, 4000);
     }
   }, [isSpinning]);
@@ -93,15 +101,14 @@ const SpinWheel = ({
             const endAngle = (i + 1) * segmentAngle;
             const path = createSegmentPath(startAngle, endAngle, radius);
             const midAngle = startAngle + segmentAngle / 2;
-            const fontSize = size === 500 ? 14 : 8;
             const textPos = getCoordinatesForAngle(midAngle, radius * 0.65);
 
-            const highlighted = selectedTerm?.id === segment.id;
+            const highlighted = selectedNumber === segment;
             return (
               <g key={i}>
                 <path
                   d={path}
-                  fill={highlighted ? "#00B894" : colors[i % 2]}
+                  fill={highlighted ? "#00B894" : sectionColors[i]}
                   stroke="#fff"
                   strokeWidth={3}
                   className={highlighted ? "highlight" : ""}
@@ -109,15 +116,15 @@ const SpinWheel = ({
                 <text
                   x={textPos.x}
                   y={textPos.y}
-                  fill="#222"
-                  fontSize={fontSize}
+                  fill="#FFFFFF"
+                  fontSize="18"
                   fontWeight="bold"
                   textAnchor="middle"
                   alignmentBaseline="middle"
-                  transform={`rotate(${midAngle + 90},${textPos.x},${textPos.y})`}
+                  transform={`rotate(${midAngle},${textPos.x},${textPos.y})`}
                   style={{ pointerEvents: "none" }}
                 >
-                  {segment.term}
+                  {segment}
                 </text>
               </g>
             );
