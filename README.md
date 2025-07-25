@@ -1,5 +1,21 @@
 # db_hackathone_2025
 
+# Backend REST endpoints
+* https://hack-tfl-backend-436819305280.us-central1.run.app/chat
+  * HTTP method: POST
+  * Sample body:
+  ```shell
+  {
+    "userId": "Amy",
+    "message": "How are you"
+  }
+  ```
+* https://hack-tfl-backend-436819305280.us-central1.run.app/chat-history
+  * HTTP method: GET
+  * Sample request:
+  ```shell
+  https://hack-tfl-backend-436819305280.us-central1.run.app/chat-history?userId=Amy
+  ```
 # Using Custom Service Accounts in GCP
 
 The default compute service account in your project has been de-privileged. Whenever you provision compute (e.g., a VM, Cloud Run service, or Cloud Function), you **must** attach your Workload SA: `workload@hack-team-tfl.iam.gserviceaccount.com`.
