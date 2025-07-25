@@ -1,10 +1,5 @@
 import React, { Suspense } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AccessibilityProvider } from "./contexts/AccessibilityContext";
 import { StyleProvider } from "./contexts/StyleContext";
 import { ChatProvider } from "./contexts/ChatContext";
@@ -12,6 +7,7 @@ import { StyleSelector } from "./components/style/StyleSelector";
 import GameTransition from "./components/common/GameTransition";
 import "./App.css";
 import Footer from "./components/common/Footer";
+
 const HomePage = React.lazy(() => import("./components/HomePage"));
 const TermMatchingGame = React.lazy(
   () => import("./components/games/TermMatchingGame"),
@@ -23,6 +19,8 @@ const LoanRoulette = React.lazy(
   () => import("./components/games/loan-roulette/LoanRoulette"),
 );
 const ChatUI = React.lazy(() => import("./components/chat/ChatUI"));
+
+const Games = React.lazy(() => import("./components/games"));
 
 const App: React.FC = () => {
   return (
@@ -50,29 +48,38 @@ const App: React.FC = () => {
                   <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route
-                      path="/term-matching"
+                      path="/games"
                       element={
                         <GameTransition>
-                          <TermMatchingGame />
+                          <Games />
                         </GameTransition>
                       }
-                    />
-                    <Route
-                      path="/loan-dice"
-                      element={
-                        <GameTransition>
-                          <LoanDiceGame />
-                        </GameTransition>
-                      }
-                    />
-                    <Route
-                      path="/loan-roulette"
-                      element={
-                        <GameTransition>
-                          <LoanRoulette />
-                        </GameTransition>
-                      }
-                    />
+                    >
+                      <Route
+                        index
+                        element={
+                          <GameTransition>
+                            <LoanRoulette />
+                          </GameTransition>
+                        }
+                      />
+                      <Route
+                        path="loan-dice"
+                        element={
+                          <GameTransition>
+                            <LoanDiceGame />
+                          </GameTransition>
+                        }
+                      />
+                      <Route
+                        path="term-matching"
+                        element={
+                          <GameTransition>
+                            <TermMatchingGame />
+                          </GameTransition>
+                        }
+                      />
+                    </Route>
                     <Route
                       path="/chat-assistant"
                       element={

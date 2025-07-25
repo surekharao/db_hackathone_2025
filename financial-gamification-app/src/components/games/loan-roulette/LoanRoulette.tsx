@@ -1,10 +1,10 @@
-import classnames from 'classnames'
-import React, { useState, useMemo } from 'react';
-import { loanQuestions } from '../../../data/loanQuestions';
-import './LoanRoulette.css';
-import SpinWheel from './SpinWheel';
+import classnames from "classnames";
+import React, { useMemo, useState } from "react";
+import { loanQuestions } from "../../../data/loanQuestions";
+import "./LoanRoulette.css";
+import SpinWheel from "./SpinWheel";
 
-const SEGMENTS = loanQuestions.map(q => q.id)
+const SEGMENTS = loanQuestions.map((q) => q.id);
 const LoanRoulette: React.FC = () => {
   const [spinning, setSpinning] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
@@ -15,19 +15,20 @@ const LoanRoulette: React.FC = () => {
   const [answeredCorrectly, setAnsweredCorrectly] = useState(false);
 
   const questions = useMemo(() => [...loanQuestions], []);
-  const currentQuestion = selectedNumber ? questions[selectedNumber - 1] : null;
+  const currentQuestion =
+    selectedNumber !== null ? questions[selectedNumber] : null;
 
   const handleAnswerSelect = (answerIndex: number) => {
     if (selectedAnswer !== null || !currentQuestion) return;
-    
+
     setSelectedAnswer(answerIndex);
     setShowResult(true);
-    
+
     const isCorrect = answerIndex === currentQuestion.correctAnswer;
     setAnsweredCorrectly(isCorrect);
-    
+
     if (isCorrect) {
-      setScore(prev => prev + currentQuestion.points);
+      setScore((prev) => prev + currentQuestion.points);
     }
   };
 
@@ -44,9 +45,9 @@ const LoanRoulette: React.FC = () => {
   const onSpinEnd = (result: number) => {
     setIsAnimating(false);
     setSelectedNumber(result);
-    setScore(prev => prev + result * 10);
+    setScore((prev) => prev + result * 10);
     setSpinning(false);
-  }
+  };
 
   return (
     <div className="loan-roulette">
@@ -54,12 +55,17 @@ const LoanRoulette: React.FC = () => {
         <h2>Lucky Number Roulette</h2>
         <div className="score">Score: {score}</div>
       </div>
-      <SpinWheel isSpinning={spinning} onSpinEnd={onSpinEnd} segments={SEGMENTS} selectedNumber={selectedNumber}  />
+      <SpinWheel
+        isSpinning={spinning}
+        onSpinEnd={onSpinEnd}
+        segments={SEGMENTS}
+        selectedNumber={selectedNumber}
+      />
 
       {currentQuestion && !spinning && (
         <div className="question-container">
           <h3 className="question">{currentQuestion.question}</h3>
-          
+
           <div className="answers-grid">
             {currentQuestion.answers.map((answer, index) => (
               <button
@@ -67,11 +73,13 @@ const LoanRoulette: React.FC = () => {
                 className={`answer-button ${
                   selectedAnswer === index
                     ? answeredCorrectly
-                      ? 'correct'
-                      : 'incorrect'
-                    : ''
-                } ${selectedAnswer !== null ? 'disabled' : ''} ${
-                  showResult && currentQuestion.correctAnswer === index ? 'show-correct' : ''
+                      ? "correct"
+                      : "incorrect"
+                    : ""
+                } ${selectedAnswer !== null ? "disabled" : ""} ${
+                  showResult && currentQuestion.correctAnswer === index
+                    ? "show-correct"
+                    : ""
                 }`}
                 onClick={() => handleAnswerSelect(index)}
                 disabled={selectedAnswer !== null}
@@ -82,9 +90,13 @@ const LoanRoulette: React.FC = () => {
           </div>
 
           {showResult && (
-            <div className={`answer-result ${answeredCorrectly ? 'correct' : 'incorrect'}`}>
-              <h4>{answeredCorrectly ? 'Correct!' : 'Incorrect!'}</h4>
-              {answeredCorrectly && <div className="points">+{currentQuestion.points} points</div>}
+            <div
+              className={`answer-result ${answeredCorrectly ? "correct" : "incorrect"}`}
+            >
+              <h4>{answeredCorrectly ? "Correct!" : "Incorrect!"}</h4>
+              {answeredCorrectly && (
+                <div className="points">+{currentQuestion.points} points</div>
+              )}
               <p className="explanation">{currentQuestion.explanation}</p>
             </div>
           )}
@@ -92,11 +104,17 @@ const LoanRoulette: React.FC = () => {
       )}
 
       <button
-        className={classnames('spin-button', {disabled : spinning || currentQuestion})}
+        className={classnames("spin-button", {
+          disabled: spinning || (currentQuestion && !showResult),
+        })}
         onClick={spinRoulette}
         disabled={spinning || isAnimating}
       >
-        {spinning ? 'Spinning...' : showResult ? 'Next Question' : 'Spin the Wheel'}
+        {spinning
+          ? "Spinning..."
+          : showResult
+            ? "Next Question"
+            : "Spin the Wheel"}
       </button>
     </div>
   );

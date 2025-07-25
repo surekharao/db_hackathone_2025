@@ -15,7 +15,7 @@ const Footer = () => (
         <div className="footer-description">Games</div>
       </div>
     </Link>
-    <Link to="/chat">
+    <Link to="/chat-assistant">
       <div>
         <div className="footer-icon">🤖</div>
         <div className="footer-description">Assistant</div>

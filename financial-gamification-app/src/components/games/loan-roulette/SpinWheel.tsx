@@ -1,15 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { RouletteTerm } from "./types";
 import "./SpinWheel.css";
 
 const sectionColors = [
-  '#FF0000', // Red
-  '#FF7F00', // Orange
-  '#e5e500', // Yellow
-  '#00FF00', // Green
-  '#0000FF', // Blue
-  '#4B0082', // Indigo
-  '#9400D3', // Violet
+  "#FF0000", // Red
+  "#FF7F00", // Orange
+  "#e5e500", // Yellow
+  "#00FF00", // Green
+  "#0000FF", // Blue
+  "#4B0082", // Indigo
+  "#9400D3", // Violet
 ];
 
 interface SpinWheelProps {
@@ -103,7 +102,10 @@ const SpinWheel = ({
             const midAngle = startAngle + segmentAngle / 2;
             const textPos = getCoordinatesForAngle(midAngle, radius * 0.65);
 
-            const highlighted = selectedNumber === segment;
+            let highlighted = selectedNumber === i + 1;
+            if (selectedNumber === 0) {
+              highlighted = i === segments.length - 1;
+            }
             return (
               <g key={i}>
                 <path
