@@ -1,0 +1,38 @@
+.wheel-svg {
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1);
+    display: block;
+}
+
+.spinning {
+    /* No additional rules; transition is handled by .wheel-svg */
+}
+
+.highlight {
+    animation: pulse 1s infinite;
+}
+
+.pointer {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    color: red;
+    font-weight: bold;
+    z-index: 1;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 1;
+    }
+}

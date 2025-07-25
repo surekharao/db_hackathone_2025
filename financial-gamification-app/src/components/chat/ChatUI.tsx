@@ -4,6 +4,7 @@ import { PersonaType } from '../../types/chat';
 import { SignLanguageKeyboard } from '../common/SignLanguageKeyboard';
 import './ChatUI.css';
 
+
 // Import icons (add these to your public/icons directory)
 const KEYBOARD_ICON = '/icons/keyboard.svg';
 const UPLOAD_ICON = '/icons/upload.svg';
@@ -685,3 +686,5 @@ export const ChatUI: React.FC = () => {
     </div>
   );
 };
+
+export default ChatUI;

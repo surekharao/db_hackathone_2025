@@ -42,7 +42,9 @@
     ]
   },
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

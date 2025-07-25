@@ -64,9 +64,10 @@ const LoanRoulette: React.FC = () => {
   };
 
   const spinRoulette = () => {
-    if (spinning || isAnimating) return;
+    if (spinning) return;
 
     setSpinning(true);
+
     setSelectedNumber(null);
     setSelectedAnswer(null);
     setShowResult(false);
@@ -138,7 +139,7 @@ const LoanRoulette: React.FC = () => {
       )}
 
       <button
-        className={`spin-button ${spinning ? 'disabled' : ''}`}
+        className={`spin-button ${spinning ? "disabled" : ""}`}
         onClick={spinRoulette}
         disabled={spinning || isAnimating}
       >
