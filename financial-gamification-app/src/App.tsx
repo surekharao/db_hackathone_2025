@@ -31,7 +31,9 @@ const App: React.FC = () => {
           <ChatProvider>
             <div className="app">
               <header className="app-header">
-                <h1>FinLit</h1>
+                <h1>
+                  FinLit<sup>+</sup>
+                </h1>
                 <StyleSelector />
                 {/*<nav>*/}
                 {/*  <ul>*/}
