@@ -4,6 +4,13 @@ import { PersonaType } from "../../types/chat";
 import { SignLanguageKeyboard } from "../common/SignLanguageKeyboard";
 import "./ChatUI.css";
 import { IoMdSend } from "react-icons/io";
+import {
+  chineseFinanceWords,
+  chineseKeyboard,
+  emojis,
+  hindiFinanceWords,
+  hindiKeyboard,
+} from "./constants";
 
 // Import icons (add these to your public/icons directory)
 const KEYBOARD_ICON = "/icons/keyboard.svg";
@@ -13,147 +20,24 @@ const VIDEO_ICON = "/icons/video.svg";
 
 export const ChatUI: React.FC = () => {
   const { state, sendMessage, setPersona, clearChat } = useChat();
+  const prevValue = useRef("");
   const [input, setInput] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showVirtualKeyboard, setShowVirtualKeyboard] = useState(false);
   const [keyboardMode, setKeyboardMode] = useState<
     "text" | "emoji" | "sign" | "hindi" | "chinese"
   >("text");
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesList = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Common emoji categories with descriptions for better accessibility
-  const emojis = {
-    reactions: {
-      title: "Reactions",
-      list: [
-        "👍",
-        "👎",
-        "😊",
-        "❤️",
-        "🙌",
-        "👏",
-        "🎉",
-        "🤔",
-        "😮",
-        "💪",
-        "👌",
-        "✨",
-      ],
-    },
-    gestures: {
-      title: "Hand Gestures",
-      list: [
-        "👋",
-        "✌️",
-        "👌",
-        "🤝",
-        "🤲",
-        "🤞",
-        "🙏",
-        "🤙",
-        "👈",
-        "✋",
-        "👐",
-        "🤚",
-      ],
-    },
-    finance: {
-      title: "Finance & Business",
-      list: [
-        "💰",
-        "💵",
-        "💳",
-        "🏦",
-        "📈",
-        "📉",
-        "💹",
-        "🤑",
-        "💸",
-        "💼",
-        "📊",
-        "💡",
-      ],
-    },
-    expressions: {
-      title: "Expressions",
-      list: [
-        "😄",
-        "😅",
-        "😂",
-        "🤣",
-        "😘",
-        "😉",
-        "😍",
-        "🤩",
-        "😘",
-        "🥳",
-        "😎",
-        "🤓",
-      ],
-    },
-    indicators: {
-      title: "Indicators",
-      list: [
-        "✅",
-        "❌",
-        "⭐",
-        "❗",
-        "❓",
-        "⚡",
-        "🔥",
-        "💯",
-        "🎯",
-        "🎯",
-        "🎲",
-        "🔔",
-      ],
-    },
-  };
-
-  // Hindi keyboard layout (Devanagari script)
-  const hindiKeyboard = [
-    ["१", "२", "३", "४", "५", "६", "७", "८", "९", "०"],
-    ["औ", "ै", "ा", "ी", "ू", "ब", "ह", "ग", "द", "ज", "ड़"],
-    ["ो", "े", "्", "ि", "ु", "प", "र", "क", "त", "च", "ट"],
-    ["ॉ", "ं", "म", "न", "व", "ल", "स", ",", ".", "य"],
-  ];
-
-  // Common Hindi words for finance
-  const hindiFinanceWords = [
-    { hindi: "पैसा", english: "money", transliteration: "paisa" },
-    { hindi: "बैंक", english: "bank", transliteration: "bank" },
-    { hindi: "बचत", english: "savings", transliteration: "bachat" },
-    { hindi: "निवेश", english: "investment", transliteration: "nivesh" },
-    { hindi: "ऋण", english: "loan", transliteration: "rin" },
-    { hindi: "जमा", english: "deposit", transliteration: "jama" },
-    { hindi: "खाता", english: "account", transliteration: "khata" },
-    { hindi: "व्याज", english: "interest", transliteration: "vyaj" },
-  ];
-
-  // Chinese keyboard layout (Simplified Chinese with Pinyin)
-  const chineseKeyboard = [
-    ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
-    ["钱", "银行", "储蓄", "投资", "贷款", "存款", "账户", "利息"],
-    ["支付", "收入", "支出", "预算", "债务", "资产", "股票", "基金"],
-    ["保险", "退休", "理财", "风险", "收益", "市场", "经济", "财务"],
-  ];
-
-  // Chinese finance words with pinyin
-  const chineseFinanceWords = [
-    { chinese: "钱", pinyin: "qián", english: "money" },
-    { chinese: "银行", pinyin: "yínháng", english: "bank" },
-    { chinese: "储蓄", pinyin: "chǔxù", english: "savings" },
-    { chinese: "投资", pinyin: "tóuzī", english: "investment" },
-    { chinese: "贷款", pinyin: "dàikuǎn", english: "loan" },
-    { chinese: "存款", pinyin: "cúnkuǎn", english: "deposit" },
-    { chinese: "账户", pinyin: "zhànghù", english: "account" },
-    { chinese: "利息", pinyin: "lìxī", english: "interest" },
-  ];
-
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesList.current) {
+      messagesList.current.scrollTo({
+        top: messagesList.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
   };
 
   useEffect(() => {
@@ -247,7 +131,7 @@ export const ChatUI: React.FC = () => {
     const newText = [...words, suggestion].join(" ") + " ";
     setInput(newText);
     setSuggestions([]);
-    inputRef.current?.focus();
+    handleInput();
   };
 
   const personas: { id: PersonaType; name: string; avatar: string }[] = [
@@ -312,7 +196,7 @@ export const ChatUI: React.FC = () => {
           </div>
         </div>
 
-        <div className="messages-list">
+        <div ref={messagesList} className="messages-list">
           {state.messages.length === 0 ? (
             <div className="empty-chat">
               <div className="empty-chat-icon">💬</div>
@@ -363,16 +247,9 @@ export const ChatUI: React.FC = () => {
                     {message.sender === "user" && (
                       <img src={UPLOAD_ICON} alt="user icon" className="icon" />
                     )}
-                    {message.sender === "bot" && (
-                      <img
-                        src={
-                          personas.find((p) => p.id === message.persona)
-                            ?.avatar || VIDEO_ICON
-                        }
-                        alt="bot icon"
-                        className="icon"
-                      />
-                    )}
+                    {message.sender === "bot" &&
+                      (personas.find((p) => p.id === message.persona)?.avatar ||
+                        VIDEO_ICON)}
                     {message.content}
                   </p>
                   <span className="timestamp">
@@ -419,7 +296,6 @@ export const ChatUI: React.FC = () => {
             </div>
           )}
         </div>
-        <div ref={messagesEndRef} />
       </div>
 
       <form

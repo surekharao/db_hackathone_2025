@@ -22,6 +22,14 @@
     padding-bottom: 4rem;
 }
 
+.theme-light .app {
+    background: #fff;
+}
+
+.app p {
+    color: var(--text-primary);
+}
+
 .font-large .app {
     padding-bottom: 4.5rem;
 }
@@ -121,6 +129,14 @@ body.high-contrast .app-header {
     animation: float 6s ease-in-out infinite;
 }
 
+.font-large .home h2 {
+    font-size: 2.25rem
+}
+
+.font-extra-large .home h2 {
+    font-size: 2.5rem
+}
+
 .game-option::before {
     content: '';
     position: absolute;
@@ -143,6 +159,7 @@ body.high-contrast .app-header {
     opacity: 0.8;
     position: relative;
     z-index: 1;
+    color: #2c3e50;
 }
 
 .app-footer {
@@ -184,10 +201,21 @@ body.high-contrast .app-header nav a:focus {
     overflow: hidden;
 }
 
-body.high-contrast .game-option {
+body.theme-light .game-option {
+    border-color: var(--text-primary);
+}
+
+body.theme-high-contrast .game-option {
     background: #333;
-    color: #fff;
     border: 2px solid #fff;
+}
+
+body.theme-high-contrast .game-option h3 {
+    color: #fff;
+}
+
+body.theme-high-contrast .game-option p {
+    color: #fff;
 }
 
 .game-option:hover {
