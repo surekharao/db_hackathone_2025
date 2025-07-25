@@ -1,48 +1,43 @@
 {
-  "transcription": "Hi, follow me. We are Butter & Cream, a bakery offering sugar-free and gluten-free pastries with the rising demand for healthier options. We are proud to be the only place in the area serving sweet treats that are guilt-free and full of flavor. We go beyond just baking, and we are seeking financial support to grow this healthier, sweeter alternative in the heart of the city. We are looking for investors who are passionate about making a positive impact on people's health and well-being through delicious food. We believe that everyone deserves to indulge in delicious treats without compromising on their health goals. Join us in our mission to spread joy and health, one pastry at a time.",
-  "speaker_tone": "Confident and passionate.",
-  "authenticity_trustworthiness": "Yes. The speaker's passion for healthy eating and their commitment to providing guilt-free options come across as genuine. The presentation of a clear business concept with a focus on health aligns with current consumer trends, lending credibility to their venture.",
-  "location_shops_signs_boards": {
-    "location": "Singapore, likely near a hawker center or market given the architectural style and the sign for 'Lau Pa Sat'.",
-    "shops": [
-      {
-        "name": "Butter & Cream",
-        "signs_boards": [
-          "Butter & Cream",
-          "Croissant • Ice Cream • Cake",
-          "Cake Donut",
-          "Hokkaido Milk Ice Cream $4.80",
-          "Choco Glazed Doffin $2.90",
-          "Coconut Bliss Doffin",
-          "M&M Doffin",
-          "Strawberry Doffin",
-          "EXIT"
-        ]
-      },
-      {
-        "name": "Kopi Kiosk",
-        "signs_boards": [
-          "Kopi Kiosk"
-        ]
-      },
-      {
-        "name": "Wing Kee Roasted",
-        "signs_boards": [
-          "Wing Kee Roasted"
-        ]
-      }
-    ],
-    "other_signs_boards": [
-      "Lau Pa Sat",
-      "A Market by the Sea",
-      "Red Bean Bun $2.20 each",
-      "Tuna Fish Bun $2.90",
-      "Original Egg Tart",
-      "Salted Egg Tart $2.9",
-      "Coconut Bliss Doffin $2.90",
-      "DELICIOUS Doffin"
-    ]
-  },
-  "crowd": "The market appears to be bustling with customers, with many people seated at tables, indicating a popular food destination. The crowd is diverse, suggesting a broad appeal.",
-  "business_potential_assessment": "Butter & Cream taps into the growing market for healthier dessert options, offering a unique selling proposition with its sugar-free and gluten-free range. The location in a high-traffic area like Lau Pa Sat, combined with a clear focus on health-conscious consumers, suggests significant growth potential."
+    "analysis": {
+        "transcription": "Hi, follow me. We are a bakery at Lau Pa Sat, offering sugar-free pastries with the rising demand for healthy options. We are proud to be the only place in the area offering sweet treats that are guilt-free and full of flavor. We go beyond just bread. We are seeking financial support to go these healthier, sweeter alternatives in the heart of the city.",
+        "speaker_tone": "The speaker's tone is confident, enthusiastic, and persuasive. They clearly believe in their product and are eager to share it.",
+        "authenticity_trustworthiness": "Yes, it feels authentic and trustworthy. The speaker is direct, passionate about offering healthier options, and presents a clear business need. The visuals of the bustling market and appealing pastries further support the pitch.",
+        "location_shops_signs": {
+            "location": "Lau Pa Sat, Singapore",
+            "shops": [
+                {
+                    "name": "Butter & Cream",
+                    "sign_text": "Butter & Cream Croissant • Ice Cream • Cake"
+                },
+                {
+                    "name": "Kopitiam",
+                    "sign_text": "Kopitiam"
+                },
+                {
+                    "name": "Wing Kee Roasted",
+                    "sign_text": "WING KEE ROASTED"
+                }
+            ],
+            "boards_text": [
+                "Lau Pa Sat A Market by the Sea",
+                "HOKKAIDO MILK ICE CREAM $4.80",
+                "Cake Donut",
+                "CHOC GLAZED DOFFIN $2.90",
+                "COCONUT BLUFF DOFFIN",
+                "M&M DOFFIN",
+                "Strawberry Doffin",
+                "Original Egg Tart",
+                "Salted Egg Tart 黄金流沙蛋挞 $2.9",
+                "Tuna Fish Bun",
+                "Butter & Cream",
+                "DELICIOUS Doffin",
+                "RED BEAN BUN $2.20 each"
+            ]
+        },
+        "other_aspects": {
+            "crowd": "The setting appears to be a busy hawker center or food market with a moderate to large crowd of people seated at tables and walking around. There are many stalls and customers engaged in eating and socializing."
+        },
+        "business_potential_assessment": "The business has strong potential by tapping into the growing demand for healthier food options, especially in a popular tourist and local destination like Lau Pa Sat. By offering guilt-free and flavorful pastries, they can attract a health-conscious customer base and stand out from traditional offerings."
+    }
 }
