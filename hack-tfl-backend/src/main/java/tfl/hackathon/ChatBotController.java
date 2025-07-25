@@ -7,15 +7,20 @@ import java.util.List;
 
 @RestController
 public class ChatBotController {
-private final ChatBotService chatBotService;
+    private final ChatBotService chatBotService;
 
     public ChatBotController(ChatBotService chatBotService) {
         this.chatBotService = chatBotService;
     }
 
     @PostMapping("/chat")
-    public String chat(@RequestBody ChatRequest request) {
+    public ChatResponse chat(@RequestBody ChatRequest request) {
         return chatBotService.chat(request.getUserId(), request.getMessage());
+    }
+
+    @PostMapping("/prompt")
+    public ChatResponse prompt(@RequestBody ChatRequest request, @RequestParam String type) {
+        return chatBotService.prompt(request.getUserId(), request.getMessage(), type);
     }
 
     @GetMapping("/chat-history")

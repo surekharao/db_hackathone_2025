@@ -2,7 +2,9 @@
 
 # UI Preview URL (will keep update)
 
-https://improved-disco-jrv69wg6wrf45p-3000.app.github.dev/
+Kevin:    https://improved-disco-jrv69wg6wrf45p-3000.app.github.dev/
+
+Vijesh:   https://vigilant-fishstick-wrqqp7g7q5jh5qjr-3000.app.github.dev/chat-assistant
 
 # Backend REST endpoints
 
@@ -20,6 +22,16 @@ https://improved-disco-jrv69wg6wrf45p-3000.app.github.dev/
     * Sample request:
   ```shell
   https://hack-tfl-backend-436819305280.us-central1.run.app/chat-history?userId=Amy
+  ```
+* https://hack-tfl-backend-436819305280.us-central1.run.app/prompt?type={type}
+    * HTTP method: POST
+    * HTTP param: Valid values for type are loan, game and tutor
+    * Sample body:
+  ```shell
+  {
+    "userId": "Amy",
+    "message": "How are you"
+  }
   ```
 
 # Using Custom Service Accounts in GCP
