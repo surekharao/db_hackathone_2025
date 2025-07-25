@@ -1,6 +1,7 @@
 package tfl.hackathon;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
@@ -26,6 +27,11 @@ public class ChatBotController {
     @GetMapping("/chat-history")
     public List<String> getHistory(@RequestParam String userId) {
         return chatBotService.history(userId);
+    }
+
+    @PostMapping("/analyze-video")
+    public VideoAnalysisResponse analyze(@RequestParam String userId, @RequestParam("file") MultipartFile file) throws Exception {
+        return chatBotService.analyzeVideo(userId, file);
     }
 
     @PostMapping("/audio-chat")
