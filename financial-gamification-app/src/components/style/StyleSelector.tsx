@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useStyle } from '../../contexts/StyleContext';
 import './StyleSelector.css';
 
@@ -76,16 +76,9 @@ export const StyleSelector: React.FC = () => {
             onClick={toggleStyleMenu}
             aria-label="Close style menu"
           >
-            <div className="style-selector-header">
-              <h3>Appearance Settings</h3>
-              <button
-                className="close-button"
-                onClick={toggleStyleMenu}
-                aria-label="Close style menu"
-              >
-                ×
-              </button>
-            </div>
+            ×
+          </button>
+        </div>
 
         <div className="setting-group">
           <label>Theme:</label>
