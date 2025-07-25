@@ -4,7 +4,7 @@ import classnames from "classnames";
 
 const Footer = () => {
   const location = useLocation();
-  return (
+  return location.pathname === "/login" ? null : (
     <footer className="footer">
       <Link
         to="/"

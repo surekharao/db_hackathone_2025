@@ -8,6 +8,7 @@ import GameTransition from "./components/common/GameTransition";
 import "./App.css";
 import Footer from "./components/common/Footer";
 
+const LoginPage = React.lazy(() => import("./components/LoginPage"));
 const HomePage = React.lazy(() => import("./components/HomePage"));
 const TermMatchingGame = React.lazy(
   () => import("./components/games/TermMatchingGame"),
@@ -30,7 +31,7 @@ const App: React.FC = () => {
           <ChatProvider>
             <div className="app">
               <header className="app-header">
-                <h1>Financial Learning Games</h1>
+                <h1>FinLit</h1>
                 <StyleSelector />
                 {/*<nav>*/}
                 {/*  <ul>*/}
@@ -46,6 +47,7 @@ const App: React.FC = () => {
               <main className="app-content">
                 <Suspense fallback={<div>Loading...</div>}>
                   <Routes>
+                    <Route path="/login" element={<LoginPage />} />
                     <Route path="/" element={<HomePage />} />
                     <Route
                       path="/games"

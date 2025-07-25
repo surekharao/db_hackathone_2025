@@ -1,0 +1,51 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: var(--card-bg);
+    border-radius: var(--border-radius, 12px);
+    border: 1px solid var(--card-border);
+    padding: 4rem;
+}
+
+.login button {
+    font-size: 1rem;
+}
+
+.font-large .login button {
+    font-size: 1.25rem;
+}
+
+.font-extra-large .login button {
+    font-size: 1.25rem;
+}
+
+.login .fb {
+    background: #2d64f6;
+    transition: all .3s;
+}
+
+.login .fb:hover {
+    background: #2450c4
+}
+
+.login .singpass {
+    background: #e14645;
+    transition: all .3s;
+}
+
+.login .singpass:hover {
+    background: #b43837;
+}
+
+.login .guest {
+    background: #fff;
+    border: 1px solid #1e2939;
+    color: #1e2939;
+    transition: all .3s;
+}
+
+.login .guest:hover {
+    background: #1e2939;
+    color: #fff;
+}
