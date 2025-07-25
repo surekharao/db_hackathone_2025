@@ -33,7 +33,10 @@ Vijesh:  https://vigilant-fishstick-wrqqp7g7q5jh5qjr-3000.app.github.dev/
     "message": "How are you"
   }
   ```
-
+* https://hack-tfl-backend-436819305280.us-central1.run.app/analyze-video
+    * HTTP method: POST
+    * The body contains form-data with two parameters - userId, file
+      
 # Using Custom Service Accounts in GCP
 
 The default compute service account in your project has been de-privileged. Whenever you provision compute (e.g., a VM,
