@@ -31,6 +31,14 @@ export const ChatUI: React.FC = () => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const scrollToTop = () => {
+    if (messagesList.current) {
+      messagesList.current.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  };
   const scrollToBottom = () => {
     if (messagesList.current) {
       messagesList.current.scrollTo({
@@ -187,7 +195,7 @@ export const ChatUI: React.FC = () => {
           <div className="chat-actions">
             <button
               className="action-button"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              onClick={scrollToTop}
               title="Scroll to top"
             >
               ⬆️
