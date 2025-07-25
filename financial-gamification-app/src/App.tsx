@@ -11,6 +11,7 @@ import { ChatProvider } from "./contexts/ChatContext";
 import { StyleSelector } from "./components/style/StyleSelector";
 import GameTransition from "./components/common/GameTransition";
 import "./App.css";
+import Footer from "./components/common/Footer";
 const HomePage = React.lazy(() => import("./components/HomePage"));
 const TermMatchingGame = React.lazy(
   () => import("./components/games/TermMatchingGame"),
@@ -33,15 +34,15 @@ const App: React.FC = () => {
               <header className="app-header">
                 <h1>Financial Learning Games</h1>
                 <StyleSelector />
-                <nav>
-                  <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/term-matching">Matching</Link></li>
-                    <li><Link to="/loan-dice">Dice</Link></li>
-                    <li><Link to="/loan-roulette">Roulette</Link></li>
-                    <li><Link to="/chat-assistant">Chat Assistant</Link></li>
-                  </ul>
-                </nav>
+                {/*<nav>*/}
+                {/*  <ul>*/}
+                {/*    <li><Link to="/">Home</Link></li>*/}
+                {/*    <li><Link to="/term-matching">Matching</Link></li>*/}
+                {/*    <li><Link to="/loan-dice">Dice</Link></li>*/}
+                {/*    <li><Link to="/loan-roulette">Roulette</Link></li>*/}
+                {/*    <li><Link to="/chat-assistant">Chat Assistant</Link></li>*/}
+                {/*  </ul>*/}
+                {/*</nav>*/}
               </header>
 
               <main className="app-content">
@@ -83,9 +84,7 @@ const App: React.FC = () => {
                   </Routes>
                 </Suspense>
               </main>
-              {/* <footer className="app-footer">
-                <p>&copy; 2025 Financial Learning Games. All rights reserved.</p>
-              </footer> */}
+              <Footer />
             </div>
           </ChatProvider>
         </AccessibilityProvider>

@@ -1,0 +1,39 @@
+.footer {
+    position: fixed;
+    bottom: 0.5rem;
+    width: 100%;
+    max-width: calc(390px - 1rem);
+    color: var(--text-primary);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(auto, 1fr));
+    height: 4rem;
+    z-index: 999;
+    background: rgba(0, 0, 0, .6);
+    border-radius: var(--border-radius, 12px);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(5px);
+    transform: translateX(0.5rem);
+}
+
+body.high-contrast .footer {
+    background-color: #000;
+}
+
+.footer > a {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.footer-icon {
+    font-size: 2rem;
+}
+
+.footer-description {
+    font-size: 0.75rem;
+    color: white;
+    text-decoration: none;
+}
