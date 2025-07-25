@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap');
+
+:root {
+  --font-multilingual: 'Noto Sans';
+  --surface-variant: rgba(255, 255, 255, 0.05);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --primary: #4A90E2;
+  --on-primary: #FFFFFF;
+  --primary-hover: #357ABD;
+}
+
 .app {
   min-height: 100vh;
   display: flex;
@@ -151,7 +162,7 @@ body.high-contrast .app-header {
 
 .app-footer {
   text-align: center;
-  padding: 2rem;
+  /* padding: 2rem; */
   color: rgba(255, 255, 255, 0.6);
   position: relative;
   z-index: 1;
@@ -241,7 +252,7 @@ body.high-contrast .game-option h3 {
 
 body.high-contrast .app-footer {
   background-color: #000;
-  border-top: 2px solid #fff;
+  border-top: solid #fff;
 }
 
 @media (max-width: 768px) {

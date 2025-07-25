@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useStyle } from "../../contexts/StyleContext";
-import "./StyleSelector.css";
-import ReactDOM from "react-dom";
+import React, { useEffect } from 'react';
+import { useStyle } from '../../contexts/StyleContext';
+import './StyleSelector.css';
 
 export const StyleSelector: React.FC = () => {
   const { settings, updateSettings } = useStyle();
@@ -23,12 +22,35 @@ export const StyleSelector: React.FC = () => {
     updateSettings({ isStyleMenuOpen: !settings.isStyleMenuOpen });
   };
 
+  const handleThemeSelect = (theme: 'light' | 'dark' | 'high-contrast') => {
+    updateSettings({ theme, isStyleMenuOpen: false }); // Close menu after selection
+  };
+
+  const handleFontSizeSelect = (fontSize: 'normal' | 'large' | 'extra-large') => {
+    updateSettings({ fontSize, isStyleMenuOpen: false }); // Close menu after selection
+  };
+
+  // Handle keyboard events
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && settings.isStyleMenuOpen) {
+        updateSettings({ isStyleMenuOpen: false });
+      }
+    };
+
+    if (settings.isStyleMenuOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+      return () => document.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [settings.isStyleMenuOpen, updateSettings]);
+
   return (
     <>
       <button
         className="style-menu-toggle"
         onClick={toggleStyleMenu}
         aria-label="Toggle style menu"
+        aria-expanded={settings.isStyleMenuOpen}
       >
         <svg viewBox="0 0 24 24" width="24" height="24">
           <path
@@ -37,10 +59,22 @@ export const StyleSelector: React.FC = () => {
           />
         </svg>
       </button>
-      {readyToRender &&
-        ReactDOM.createPortal(
-          <div
-            className={`style-selector ${settings.isStyleMenuOpen ? "open" : ""}`}
+
+      {/* Overlay to close menu when clicking outside */}
+      {settings.isStyleMenuOpen && (
+        <div 
+          className="style-menu-overlay"
+          onClick={() => updateSettings({ isStyleMenuOpen: false })}
+        />
+      )}
+
+      <div className={`style-selector ${settings.isStyleMenuOpen ? 'open' : ''}`}>
+        <div className="style-selector-header">
+          <h3>Appearance Settings</h3>
+          <button 
+            className="close-button" 
+            onClick={toggleStyleMenu}
+            aria-label="Close style menu"
           >
             <div className="style-selector-header">
               <h3>Appearance Settings</h3>
@@ -53,65 +87,63 @@ export const StyleSelector: React.FC = () => {
               </button>
             </div>
 
-            <div className="setting-group">
-              <label>Theme:</label>
-              <div className="theme-options">
-                <button
-                  className={`theme-button light ${settings.theme === "light" ? "active" : ""}`}
-                  onClick={() => updateSettings({ theme: "light" })}
-                  aria-label="Light theme"
-                >
-                  <span className="theme-icon">☀️</span>
-                  <span>Light</span>
-                </button>
-                <button
-                  className={`theme-button dark ${settings.theme === "dark" ? "active" : ""}`}
-                  onClick={() => updateSettings({ theme: "dark" })}
-                  aria-label="Dark theme"
-                >
-                  <span className="theme-icon">🌙</span>
-                  <span>Dark</span>
-                </button>
-                <button
-                  className={`theme-button high-contrast ${settings.theme === "high-contrast" ? "active" : ""}`}
-                  onClick={() => updateSettings({ theme: "high-contrast" })}
-                  aria-label="High contrast theme"
-                >
-                  <span className="theme-icon">🎨</span>
-                  <span>High Contrast</span>
-                </button>
-              </div>
-            </div>
+        <div className="setting-group">
+          <label>Theme:</label>
+          <div className="theme-options">
+            <button
+              className={`theme-button light ${settings.theme === 'light' ? 'active' : ''}`}
+              onClick={() => handleThemeSelect('light')}
+              aria-label="Light theme"
+            >
+              <span className="theme-icon">☀️</span>
+              <span>Light</span>
+            </button>
+            <button
+              className={`theme-button dark ${settings.theme === 'dark' ? 'active' : ''}`}
+              onClick={() => handleThemeSelect('dark')}
+              aria-label="Dark theme"
+            >
+              <span className="theme-icon">🌙</span>
+              <span>Dark</span>
+            </button>
+            <button
+              className={`theme-button high-contrast ${settings.theme === 'high-contrast' ? 'active' : ''}`}
+              onClick={() => handleThemeSelect('high-contrast')}
+              aria-label="High contrast theme"
+            >
+              <span className="theme-icon">🎨</span>
+              <span>High Contrast</span>
+            </button>
+          </div>
+        </div>
 
-            <div className="setting-group">
-              <label>Font Size:</label>
-              <div className="font-size-options">
-                <button
-                  className={`font-button ${settings.fontSize === "normal" ? "active" : ""}`}
-                  onClick={() => updateSettings({ fontSize: "normal" })}
-                  aria-label="Normal text size"
-                >
-                  A
-                </button>
-                <button
-                  className={`font-button ${settings.fontSize === "large" ? "active" : ""}`}
-                  onClick={() => updateSettings({ fontSize: "large" })}
-                  aria-label="Large text size"
-                >
-                  A+
-                </button>
-                <button
-                  className={`font-button ${settings.fontSize === "extra-large" ? "active" : ""}`}
-                  onClick={() => updateSettings({ fontSize: "extra-large" })}
-                  aria-label="Extra large text size"
-                >
-                  A++
-                </button>
-              </div>
-            </div>
-          </div>,
-          document.querySelector(".app") ?? document.body,
-        )}
+        <div className="setting-group">
+          <label>Font Size:</label>
+          <div className="font-size-options">
+            <button
+              className={`font-button ${settings.fontSize === 'normal' ? 'active' : ''}`}
+              onClick={() => handleFontSizeSelect('normal')}
+              aria-label="Normal text size"
+            >
+              A
+            </button>
+            <button
+              className={`font-button ${settings.fontSize === 'large' ? 'active' : ''}`}
+              onClick={() => handleFontSizeSelect('large')}
+              aria-label="Large text size"
+            >
+              A+
+            </button>
+            <button
+              className={`font-button ${settings.fontSize === 'extra-large' ? 'active' : ''}`}
+              onClick={() => handleFontSizeSelect('extra-large')}
+              aria-label="Extra large text size"
+            >
+              A++
+            </button>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

@@ -2,15 +2,20 @@
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  background: var(--card-bg);
+  border-radius: var(--border-radius, 12px);
+  border: 1px solid var(--card-border);
 }
 
 .instructions {
-  background: #f8f9fa;
+  background: var(--card-bg-secondary);
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: var(--border-radius-sm, 8px);
   margin-bottom: 2rem;
   font-size: 1.1rem;
   line-height: 1.5;
+  border: 1px solid var(--card-border);
+  color: var(--text-primary);
 }
 
 body.high-contrast .instructions {

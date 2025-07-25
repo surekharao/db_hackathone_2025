@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hand Base -->
+  <path d="M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z" fill="#FFE0B2"/>
+  <!-- Finger -->
+  <path d="M24 14V29C24 30.1046 23.1046 31 22 31C20.8954 31 20 30.1046 20 29V14C20 12.8954 20.8954 12 22 12C23.1046 12 24 12.8954 24 14Z" fill="#8D6E63"/>
+  <!-- Palm -->
+  <path d="M30 29C30 32.3137 27.3137 35 24 35C20.6863 35 18 32.3137 18 29" stroke="#5D4037" stroke-width="2" stroke-linecap="round"/>
+  <!-- Shadow -->
+  <path d="M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4" stroke="#FFB74D" stroke-width="2" stroke-linecap="round"/>
+  <!-- Hindi Number -->
+  <text x="32" y="20" font-family="Noto Sans Devanagari" font-size="12" fill="#5D4037">१</text>
+</svg>

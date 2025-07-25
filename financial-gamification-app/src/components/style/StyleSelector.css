@@ -24,23 +24,41 @@
   color: var(--text-primary);
 }
 
-.style-selector {
-  position: absolute;
-  right: 0;
+
+/* Overlay for closing menu when clicking outside */
+.style-menu-overlay {
+  position: fixed;
   top: 0;
-  width: 300px;
-  height: calc(100vh - 2rem);
-  background: var(--bg-secondary);
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
-  padding: 1rem;
-  transition: transform 0.3s ease;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
   z-index: 999;
-  overflow-y: auto;
-  transform: translateX(100%);
+}
+
+.style-selector {
+  position: fixed;
+  right: 20px;
+  top: 70px;
+  width: 320px;
+  background: var(--bg-primary);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  
+  /* Hidden by default */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px) scale(0.95);
+  transition: all 0.3s ease;
 }
 
 .style-selector.open {
-  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
 }
 
 .style-selector-header {
@@ -168,7 +186,16 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .style-selector {
+    right: 10px;
+    top: 60px;
+    width: calc(100vw - 20px);
+    max-width: 300px;
     padding: 1rem;
+  }
+
+  .style-menu-toggle {
+    right: 10px;
+    top: 10px;
   }
 
   .persona-options,
@@ -181,6 +208,10 @@
   .font-button,
   .theme-button {
     width: 100%;
+  }
+
+  .style-selector-header h3 {
+    font-size: 1.1rem;
   }
 }
 

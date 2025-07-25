@@ -35,21 +35,11 @@ const App: React.FC = () => {
                 <StyleSelector />
                 <nav>
                   <ul>
-                    <li>
-                      <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                      <Link to="/term-matching">Term Matching</Link>
-                    </li>
-                    <li>
-                      <Link to="/loan-dice">Loan Dice</Link>
-                    </li>
-                    <li>
-                      <Link to="/loan-roulette">Loan Roulette</Link>
-                    </li>
-                    <li>
-                      <Link to="/chat-assistant">Chat Assistant</Link>
-                    </li>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/term-matching">Matching</Link></li>
+                    <li><Link to="/loan-dice">Dice</Link></li>
+                    <li><Link to="/loan-roulette">Roulette</Link></li>
+                    <li><Link to="/chat-assistant">Chat Assistant</Link></li>
                   </ul>
                 </nav>
               </header>
@@ -93,12 +83,9 @@ const App: React.FC = () => {
                   </Routes>
                 </Suspense>
               </main>
-
-              <footer className="app-footer">
-                <p>
-                  &copy; 2025 Financial Learning Games. All rights reserved.
-                </p>
-              </footer>
+              {/* <footer className="app-footer">
+                <p>&copy; 2025 Financial Learning Games. All rights reserved.</p>
+              </footer> */}
             </div>
           </ChatProvider>
         </AccessibilityProvider>

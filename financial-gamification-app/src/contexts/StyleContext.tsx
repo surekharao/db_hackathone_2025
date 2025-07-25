@@ -33,6 +33,7 @@ export const StyleProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     document.body.classList.add(`font-${settings.fontSize}`);
     
     // Apply theme
+    document.documentElement.setAttribute('data-theme', settings.theme);
     document.body.classList.remove('theme-light', 'theme-dark', 'theme-high-contrast');
     document.body.classList.add(`theme-${settings.theme}`);
 
