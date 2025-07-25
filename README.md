@@ -4,7 +4,7 @@
 
 Kevin:    https://improved-disco-jrv69wg6wrf45p-3000.app.github.dev/
 
-Vijesh:   https://vigilant-fishstick-wrqqp7g7q5jh5qjr-3000.app.github.dev/chat-assistant
+Vijesh:  https://vigilant-fishstick-wrqqp7g7q5jh5qjr-3000.app.github.dev/
 
 # Backend REST endpoints
 
