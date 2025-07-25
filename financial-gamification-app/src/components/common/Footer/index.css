@@ -10,9 +10,18 @@
     z-index: 999;
     background: rgba(0, 0, 0, .6);
     border-radius: var(--border-radius, 12px);
+    overflow: hidden;
     border: 1px solid var(--card-border);
     backdrop-filter: blur(5px);
     transform: translateX(0.5rem);
+}
+
+.font-large .footer {
+    height: 4.5rem;
+}
+
+.font-extra-large .footer {
+    height: 5rem;
 }
 
 body.high-contrast .footer {
@@ -26,6 +35,12 @@ body.high-contrast .footer {
     align-items: center;
     text-decoration: none;
     cursor: pointer;
+    transition: all 0.3s;
+    outline: none;
+}
+
+.footer > a.active {
+    background: #6C5CE7;
 }
 
 .footer-icon {
@@ -36,4 +51,12 @@ body.high-contrast .footer {
     font-size: 0.75rem;
     color: white;
     text-decoration: none;
+}
+
+.font-large .footer-description {
+    font-size: 1rem;
+}
+
+.font-extra-large .footer-description {
+    font-size: 1.25rem;
 }

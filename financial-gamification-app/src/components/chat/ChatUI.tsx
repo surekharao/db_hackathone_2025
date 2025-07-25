@@ -1,22 +1,24 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useChat } from '../../contexts/ChatContext';
-import { PersonaType } from '../../types/chat';
-import { SignLanguageKeyboard } from '../common/SignLanguageKeyboard';
-import './ChatUI.css';
-
+import React, { useEffect, useRef, useState } from "react";
+import { useChat } from "../../contexts/ChatContext";
+import { PersonaType } from "../../types/chat";
+import { SignLanguageKeyboard } from "../common/SignLanguageKeyboard";
+import "./ChatUI.css";
+import { IoMdSend } from "react-icons/io";
 
 // Import icons (add these to your public/icons directory)
-const KEYBOARD_ICON = '/icons/keyboard.svg';
-const UPLOAD_ICON = '/icons/upload.svg';
-const AUDIO_ICON = '/icons/audio.svg';
-const VIDEO_ICON = '/icons/video.svg';
+const KEYBOARD_ICON = "/icons/keyboard.svg";
+const UPLOAD_ICON = "/icons/upload.svg";
+const AUDIO_ICON = "/icons/audio.svg";
+const VIDEO_ICON = "/icons/video.svg";
 
 export const ChatUI: React.FC = () => {
   const { state, sendMessage, setPersona, clearChat } = useChat();
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showVirtualKeyboard, setShowVirtualKeyboard] = useState(false);
-  const [keyboardMode, setKeyboardMode] = useState<'text' | 'emoji' | 'sign' | 'hindi' | 'chinese'>('text');
+  const [keyboardMode, setKeyboardMode] = useState<
+    "text" | "emoji" | "sign" | "hindi" | "chinese"
+  >("text");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -24,69 +26,134 @@ export const ChatUI: React.FC = () => {
   // Common emoji categories with descriptions for better accessibility
   const emojis = {
     reactions: {
-      title: 'Reactions',
-      list: ['👍', '👎', '😊', '❤️', '🙌', '👏', '🎉', '🤔', '😮', '💪', '👌', '✨']
+      title: "Reactions",
+      list: [
+        "👍",
+        "👎",
+        "😊",
+        "❤️",
+        "🙌",
+        "👏",
+        "🎉",
+        "🤔",
+        "😮",
+        "💪",
+        "👌",
+        "✨",
+      ],
     },
     gestures: {
-      title: 'Hand Gestures',
-      list: ['👋', '✌️', '👌', '🤝', '🤲', '🤞', '🙏', '🤙', '👈', '✋', '👐', '🤚']
+      title: "Hand Gestures",
+      list: [
+        "👋",
+        "✌️",
+        "👌",
+        "🤝",
+        "🤲",
+        "🤞",
+        "🙏",
+        "🤙",
+        "👈",
+        "✋",
+        "👐",
+        "🤚",
+      ],
     },
     finance: {
-      title: 'Finance & Business',
-      list: ['💰', '💵', '💳', '🏦', '📈', '📉', '💹', '🤑', '💸', '💼', '📊', '💡']
+      title: "Finance & Business",
+      list: [
+        "💰",
+        "💵",
+        "💳",
+        "🏦",
+        "📈",
+        "📉",
+        "💹",
+        "🤑",
+        "💸",
+        "💼",
+        "📊",
+        "💡",
+      ],
     },
     expressions: {
-      title: 'Expressions',
-      list: ['😄', '😅', '😂', '🤣', '😘', '😉', '😍', '🤩', '😘', '🥳', '😎', '🤓']
+      title: "Expressions",
+      list: [
+        "😄",
+        "😅",
+        "😂",
+        "🤣",
+        "😘",
+        "😉",
+        "😍",
+        "🤩",
+        "😘",
+        "🥳",
+        "😎",
+        "🤓",
+      ],
     },
     indicators: {
-      title: 'Indicators',
-      list: ['✅', '❌', '⭐', '❗', '❓', '⚡', '🔥', '💯', '🎯', '🎯', '🎲', '🔔']
-    }
+      title: "Indicators",
+      list: [
+        "✅",
+        "❌",
+        "⭐",
+        "❗",
+        "❓",
+        "⚡",
+        "🔥",
+        "💯",
+        "🎯",
+        "🎯",
+        "🎲",
+        "🔔",
+      ],
+    },
   };
 
   // Hindi keyboard layout (Devanagari script)
   const hindiKeyboard = [
-    ['१', '२', '३', '४', '५', '६', '७', '८', '९', '०'],
-    ['औ', 'ै', 'ा', 'ी', 'ू', 'ब', 'ह', 'ग', 'द', 'ज', 'ड़'],
-    ['ो', 'े', '्', 'ि', 'ु', 'प', 'र', 'क', 'त', 'च', 'ट'],
-    ['ॉ', 'ं', 'म', 'न', 'व', 'ल', 'स', ',', '.', 'य']
+    ["१", "२", "३", "४", "५", "६", "७", "८", "९", "०"],
+    ["औ", "ै", "ा", "ी", "ू", "ब", "ह", "ग", "द", "ज", "ड़"],
+    ["ो", "े", "्", "ि", "ु", "प", "र", "क", "त", "च", "ट"],
+    ["ॉ", "ं", "म", "न", "व", "ल", "स", ",", ".", "य"],
   ];
 
   // Common Hindi words for finance
   const hindiFinanceWords = [
-    { hindi: 'पैसा', english: 'money', transliteration: 'paisa' },
-    { hindi: 'बैंक', english: 'bank', transliteration: 'bank' },
-    { hindi: 'बचत', english: 'savings', transliteration: 'bachat' },
-    { hindi: 'निवेश', english: 'investment', transliteration: 'nivesh' },
-    { hindi: 'ऋण', english: 'loan', transliteration: 'rin' },
-    { hindi: 'जमा', english: 'deposit', transliteration: 'jama' },
-    { hindi: 'खाता', english: 'account', transliteration: 'khata' },
-    { hindi: 'व्याज', english: 'interest', transliteration: 'vyaj' }
+    { hindi: "पैसा", english: "money", transliteration: "paisa" },
+    { hindi: "बैंक", english: "bank", transliteration: "bank" },
+    { hindi: "बचत", english: "savings", transliteration: "bachat" },
+    { hindi: "निवेश", english: "investment", transliteration: "nivesh" },
+    { hindi: "ऋण", english: "loan", transliteration: "rin" },
+    { hindi: "जमा", english: "deposit", transliteration: "jama" },
+    { hindi: "खाता", english: "account", transliteration: "khata" },
+    { hindi: "व्याज", english: "interest", transliteration: "vyaj" },
   ];
 
   // Chinese keyboard layout (Simplified Chinese with Pinyin)
   const chineseKeyboard = [
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-    ['钱', '银行', '储蓄', '投资', '贷款', '存款', '账户', '利息'],
-    ['支付', '收入', '支出', '预算', '债务', '资产', '股票', '基金'],
-    ['保险', '退休', '理财', '风险', '收益', '市场', '经济', '财务']
+    ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+    ["钱", "银行", "储蓄", "投资", "贷款", "存款", "账户", "利息"],
+    ["支付", "收入", "支出", "预算", "债务", "资产", "股票", "基金"],
+    ["保险", "退休", "理财", "风险", "收益", "市场", "经济", "财务"],
   ];
 
   // Chinese finance words with pinyin
   const chineseFinanceWords = [
-    { chinese: '钱', pinyin: 'qián', english: 'money' },
-    { chinese: '银行', pinyin: 'yínháng', english: 'bank' },
-    { chinese: '储蓄', pinyin: 'chǔxù', english: 'savings' },
-    { chinese: '投资', pinyin: 'tóuzī', english: 'investment' },
-    { chinese: '贷款', pinyin: 'dàikuǎn', english: 'loan' },
-    { chinese: '存款', pinyin: 'cúnkuǎn', english: 'deposit' },
-    { chinese: '账户', pinyin: 'zhànghù', english: 'account' },
-    { chinese: '利息', pinyin: 'lìxī', english: 'interest' }
+    { chinese: "钱", pinyin: "qián", english: "money" },
+    { chinese: "银行", pinyin: "yínháng", english: "bank" },
+    { chinese: "储蓄", pinyin: "chǔxù", english: "savings" },
+    { chinese: "投资", pinyin: "tóuzī", english: "investment" },
+    { chinese: "贷款", pinyin: "dàikuǎn", english: "loan" },
+    { chinese: "存款", pinyin: "cúnkuǎn", english: "deposit" },
+    { chinese: "账户", pinyin: "zhànghù", english: "account" },
+    { chinese: "利息", pinyin: "lìxī", english: "interest" },
   ];
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -97,7 +164,7 @@ export const ChatUI: React.FC = () => {
     e.preventDefault();
     if (input.trim()) {
       sendMessage(input.trim());
-      setInput('');
+      setInput("");
     }
   };
 
@@ -120,12 +187,12 @@ export const ChatUI: React.FC = () => {
   };
 
   const handleVirtualKeyPress = (key: string) => {
-    setInput(prev => prev + key);
+    setInput((prev) => prev + key);
     inputRef.current?.focus();
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSubmit(e);
     }
@@ -137,20 +204,33 @@ export const ChatUI: React.FC = () => {
 
     if (value.trim().length > 2) {
       const allWords = [
-        ...hindiFinanceWords.map(w => w.hindi),
-        ...hindiFinanceWords.map(w => w.english),
-        ...chineseFinanceWords.map(w => w.chinese),
-        ...chineseFinanceWords.map(w => w.pinyin),
-        ...Object.values(emojis).flatMap(cat => cat.list),
-        "investment", "savings", "loan", "credit score", "compound interest",
-        "stocks", "bonds", "mutual funds", "ETF", "401k", "IRA"
+        ...hindiFinanceWords.map((w) => w.hindi),
+        ...hindiFinanceWords.map((w) => w.english),
+        ...chineseFinanceWords.map((w) => w.chinese),
+        ...chineseFinanceWords.map((w) => w.pinyin),
+        ...Object.values(emojis).flatMap((cat) => cat.list),
+        "investment",
+        "savings",
+        "loan",
+        "credit score",
+        "compound interest",
+        "stocks",
+        "bonds",
+        "mutual funds",
+        "ETF",
+        "401k",
+        "IRA",
       ];
-      
-      const lastWord = value.split(/[\s,.]+/).pop()?.toLowerCase() || '';
-      
-      if(lastWord) {
-        const filteredSuggestions = allWords.filter(word => 
-          word.toLowerCase().startsWith(lastWord)
+
+      const lastWord =
+        value
+          .split(/[\s,.]+/)
+          .pop()
+          ?.toLowerCase() || "";
+
+      if (lastWord) {
+        const filteredSuggestions = allWords.filter((word) =>
+          word.toLowerCase().startsWith(lastWord),
         );
         setSuggestions(filteredSuggestions.slice(0, 5));
       } else {
@@ -164,30 +244,38 @@ export const ChatUI: React.FC = () => {
   const handleSuggestionClick = (suggestion: string) => {
     const words = input.split(/[\s,.]+/);
     words.pop();
-    const newText = [...words, suggestion].join(' ') + ' ';
+    const newText = [...words, suggestion].join(" ") + " ";
     setInput(newText);
     setSuggestions([]);
     inputRef.current?.focus();
   };
 
   const personas: { id: PersonaType; name: string; avatar: string }[] = [
-    { id: 'relationship-manager', name: 'Financial Advisor', avatar: '👨‍💼' },
-    { id: 'ai-coach', name: 'Investment Coach', avatar: '👩‍🏫' },
-    { id: 'ai-tutor', name: 'Finance Tutor', avatar: '🎓' }
+    { id: "relationship-manager", name: "Financial Advisor", avatar: "👨‍💼" },
+    { id: "ai-coach", name: "Investment Coach", avatar: "👩‍🏫" },
+    { id: "ai-tutor", name: "Finance Tutor", avatar: "🎓" },
   ];
+  const handleInput = () => {
+    const el = inputRef.current;
+    if (el) {
+      el.style.height = "auto"; // Reset first
+      el.style.height = `${el.scrollHeight - 16}px`; // Then adjust
+    }
+  };
 
   return (
-    <div className={`chat-container ${showVirtualKeyboard ? 'keyboard-active' : ''}`}>
+    <div
+      className={`chat-container ${showVirtualKeyboard ? "keyboard-active" : ""}`}
+    >
       <div className="chat-header">
         <div className="persona-selector">
-          {personas.map(persona => (
+          {personas.map((persona) => (
             <button
               key={persona.id}
-              className={`persona-button ${state.selectedPersona === persona.id ? 'active' : ''}`}
+              className={`persona-button ${state.selectedPersona === persona.id ? "active" : ""}`}
               onClick={() => setPersona(persona.id)}
             >
               <span className="persona-avatar">{persona.avatar}</span>
-              <span className="persona-name">{persona.name}</span>
             </button>
           ))}
         </div>
@@ -201,19 +289,21 @@ export const ChatUI: React.FC = () => {
           <div className="chat-status">
             <span className="status-indicator"></span>
             <span className="status-text">
-              {state.isTyping ? 'AI is typing...' : `${state.messages.length} messages`}
+              {state.isTyping
+                ? "AI is typing..."
+                : `${state.messages.length} messages`}
             </span>
           </div>
           <div className="chat-actions">
-            <button 
-              className="action-button" 
-              onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
+            <button
+              className="action-button"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               title="Scroll to top"
             >
               ⬆️
             </button>
-            <button 
-              className="action-button" 
+            <button
+              className="action-button"
               onClick={clearChat}
               title="Clear conversation"
             >
@@ -221,27 +311,34 @@ export const ChatUI: React.FC = () => {
             </button>
           </div>
         </div>
-        
+
         <div className="messages-list">
           {state.messages.length === 0 ? (
             <div className="empty-chat">
               <div className="empty-chat-icon">💬</div>
               <h3>Start Your Financial Conversation</h3>
-              <p>Ask questions about investments, savings, loans, or any financial topic!</p>
+              <p>
+                Ask questions about investments, savings, loans, or any
+                financial topic!
+              </p>
               <div className="suggested-prompts">
-                <button 
+                <button
                   className="prompt-button"
-                  onClick={() => setInput("What's the best way to start investing with $1000?")}
+                  onClick={() =>
+                    setInput(
+                      "What's the best way to start investing with $1000?",
+                    )
+                  }
                 >
                   💰 Investment advice
                 </button>
-                <button 
+                <button
                   className="prompt-button"
                   onClick={() => setInput("How can I improve my credit score?")}
                 >
                   📈 Credit tips
                 </button>
-                <button 
+                <button
                   className="prompt-button"
                   onClick={() => setInput("Explain compound interest")}
                 >
@@ -250,37 +347,55 @@ export const ChatUI: React.FC = () => {
               </div>
             </div>
           ) : (
-            state.messages.map(message => (
+            state.messages.map((message) => (
               <div
                 key={message.id}
-                className={`message ${message.sender === 'user' ? 'user' : 'bot'}`}
+                className={`message ${message.sender === "user" ? "user" : "bot"}`}
               >
-                {message.sender === 'bot' && (
+                {message.sender === "bot" && (
                   <div className="bot-avatar">
-                    {personas.find(p => p.id === message.persona)?.avatar || '🤖'}
+                    {personas.find((p) => p.id === message.persona)?.avatar ||
+                      "🤖"}
                   </div>
                 )}
                 <div className="message-content">
                   <p>
-                    {message.sender === 'user' && <img src={UPLOAD_ICON} alt="user icon" className="icon" />}
-                    {message.sender === 'bot' && <img src={personas.find(p => p.id === message.persona)?.avatar || VIDEO_ICON} alt="bot icon" className="icon" />}
+                    {message.sender === "user" && (
+                      <img src={UPLOAD_ICON} alt="user icon" className="icon" />
+                    )}
+                    {message.sender === "bot" && (
+                      <img
+                        src={
+                          personas.find((p) => p.id === message.persona)
+                            ?.avatar || VIDEO_ICON
+                        }
+                        alt="bot icon"
+                        className="icon"
+                      />
+                    )}
                     {message.content}
                   </p>
                   <span className="timestamp">
                     {new Date(message.timestamp).toLocaleTimeString()}
                   </span>
                   <div className="message-actions">
-                    <button 
+                    <button
                       className="message-action-btn"
-                      onClick={() => navigator.clipboard.writeText(message.content)}
+                      onClick={() =>
+                        navigator.clipboard.writeText(message.content)
+                      }
                       title="Copy message"
                     >
                       📋
                     </button>
-                    {message.sender === 'bot' && (
-                      <button 
+                    {message.sender === "bot" && (
+                      <button
                         className="message-action-btn"
-                        onClick={() => setInput(`Explain more about: "${message.content.substring(0, 50)}..."`)}
+                        onClick={() =>
+                          setInput(
+                            `Explain more about: "${message.content.substring(0, 50)}..."`,
+                          )
+                        }
                         title="Ask for more details"
                       >
                         🔍
@@ -294,7 +409,7 @@ export const ChatUI: React.FC = () => {
           {state.isTyping && (
             <div className="message bot">
               <div className="bot-avatar">
-                {personas.find(p => p.id === state.selectedPersona)?.avatar}
+                {personas.find((p) => p.id === state.selectedPersona)?.avatar}
               </div>
               <div className="message-content typing">
                 <span className="typing-dot"></span>
@@ -307,25 +422,28 @@ export const ChatUI: React.FC = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      <form onSubmit={handleSubmit} className={`chat-input-container ${showVirtualKeyboard ? 'keyboard-active' : ''}`}>
+      <form
+        onSubmit={handleSubmit}
+        className={`chat-input-container ${showVirtualKeyboard ? "keyboard-active" : ""}`}
+      >
         {/* Combined Input and Controls Row */}
         <div className="chat-main-row">
           <div className="chat-tools">
-            <button
-              type="button"
-              className="tool-button"
-              onClick={handleVirtualKeyboardToggle}
-              title="Virtual Keyboard"
-            >
-              <img src={KEYBOARD_ICON} alt="Keyboard" />
-            </button>
+            {/*<button*/}
+            {/*  type="button"*/}
+            {/*  className="tool-button"*/}
+            {/*  onClick={handleVirtualKeyboardToggle}*/}
+            {/*  title="Virtual Keyboard"*/}
+            {/*>*/}
+            {/*  <img src={KEYBOARD_ICON} alt="Keyboard" />*/}
+            {/*</button>*/}
             <div className="file-upload">
               <input
                 type="file"
                 ref={fileInputRef}
                 onChange={handleFileUpload}
                 accept="audio/*,video/*"
-                style={{ display: 'none' }}
+                style={{ display: "none" }}
               />
               <button
                 type="button"
@@ -337,7 +455,7 @@ export const ChatUI: React.FC = () => {
               </button>
             </div>
           </div>
-          
+
           <div className="input-wrapper">
             <textarea
               ref={inputRef}
@@ -345,8 +463,9 @@ export const ChatUI: React.FC = () => {
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               placeholder="Type your message here..."
-              rows={2}
+              rows={1}
               className="chat-input"
+              onInput={handleInput}
             />
             {suggestions.length > 0 && (
               <div className="suggestions-popup">
@@ -362,9 +481,13 @@ export const ChatUI: React.FC = () => {
               </div>
             )}
           </div>
-          
-          <button type="submit" className="send-button" disabled={!input.trim()}>
-            Send
+
+          <button
+            type="submit"
+            className="send-button"
+            disabled={!input.trim()}
+          >
+            <IoMdSend />
           </button>
         </div>
 
@@ -373,46 +496,46 @@ export const ChatUI: React.FC = () => {
           <div className="keyboard-wrapper">
             <div className="keyboard-tabs">
               <button
-                className={`keyboard-tab ${keyboardMode === 'text' ? 'active' : ''}`}
-                onClick={() => setKeyboardMode('text')}
+                className={`keyboard-tab ${keyboardMode === "text" ? "active" : ""}`}
+                onClick={() => setKeyboardMode("text")}
                 title="English keyboard"
               >
                 ABC
               </button>
               <button
-                className={`keyboard-tab ${keyboardMode === 'emoji' ? 'active' : ''}`}
-                onClick={() => setKeyboardMode('emoji')}
+                className={`keyboard-tab ${keyboardMode === "emoji" ? "active" : ""}`}
+                onClick={() => setKeyboardMode("emoji")}
                 title="Emoji keyboard"
               >
                 😊
               </button>
               <button
-                className={`keyboard-tab ${keyboardMode === 'sign' ? 'active' : ''}`}
-                onClick={() => setKeyboardMode('sign')}
+                className={`keyboard-tab ${keyboardMode === "sign" ? "active" : ""}`}
+                onClick={() => setKeyboardMode("sign")}
                 title="Sign language keyboard"
               >
                 🤟
               </button>
               <button
-                className={`keyboard-tab ${keyboardMode === 'hindi' ? 'active' : ''}`}
-                onClick={() => setKeyboardMode('hindi')}
+                className={`keyboard-tab ${keyboardMode === "hindi" ? "active" : ""}`}
+                onClick={() => setKeyboardMode("hindi")}
                 title="Hindi keyboard"
               >
                 हिं
               </button>
               <button
-                className={`keyboard-tab ${keyboardMode === 'chinese' ? 'active' : ''}`}
-                onClick={() => setKeyboardMode('chinese')}
+                className={`keyboard-tab ${keyboardMode === "chinese" ? "active" : ""}`}
+                onClick={() => setKeyboardMode("chinese")}
                 title="Chinese keyboard"
               >
                 中文
               </button>
             </div>
-            
-            {keyboardMode === 'text' ? (
+
+            {keyboardMode === "text" ? (
               <div className="virtual-keyboard">
                 <div className="keyboard-row">
-                  {Array.from('1234567890').map((key) => (
+                  {Array.from("1234567890").map((key) => (
                     <button
                       key={key}
                       type="button"
@@ -422,17 +545,17 @@ export const ChatUI: React.FC = () => {
                       {key}
                     </button>
                   ))}
-                  <button 
-                    key="backspace" 
-                    type="button" 
+                  <button
+                    key="backspace"
+                    type="button"
                     className="key function-key wide"
-                    onClick={() => setInput(prev => prev.slice(0, -1))}
+                    onClick={() => setInput((prev) => prev.slice(0, -1))}
                   >
                     ⌫
                   </button>
                 </div>
                 <div className="keyboard-row">
-                  {Array.from('qwertyuiop').map((key) => (
+                  {Array.from("qwertyuiop").map((key) => (
                     <button
                       key={key}
                       type="button"
@@ -444,7 +567,7 @@ export const ChatUI: React.FC = () => {
                   ))}
                 </div>
                 <div className="keyboard-row">
-                  {Array.from('asdfghjkl').map((key) => (
+                  {Array.from("asdfghjkl").map((key) => (
                     <button
                       key={key}
                       type="button"
@@ -454,9 +577,9 @@ export const ChatUI: React.FC = () => {
                       {key.toUpperCase()}
                     </button>
                   ))}
-                  <button 
-                    key="enter" 
-                    type="button" 
+                  <button
+                    key="enter"
+                    type="button"
                     className="key function-key wide"
                     onClick={(e) => handleSubmit(e as any)}
                   >
@@ -473,7 +596,7 @@ export const ChatUI: React.FC = () => {
                   >
                     ⇧
                   </button>
-                  {Array.from('zxcvbnm').map((key) => (
+                  {Array.from("zxcvbnm").map((key) => (
                     <button
                       key={key}
                       type="button"
@@ -486,14 +609,14 @@ export const ChatUI: React.FC = () => {
                   <button
                     type="button"
                     className="key function-key"
-                    onClick={() => handleVirtualKeyPress('.')}
+                    onClick={() => handleVirtualKeyPress(".")}
                   >
                     .
                   </button>
                   <button
                     type="button"
                     className="key function-key"
-                    onClick={() => handleVirtualKeyPress(',')}
+                    onClick={() => handleVirtualKeyPress(",")}
                   >
                     ,
                   </button>
@@ -502,27 +625,27 @@ export const ChatUI: React.FC = () => {
                   <button
                     type="button"
                     className="key function-key"
-                    onClick={() => setKeyboardMode('emoji')}
+                    onClick={() => setKeyboardMode("emoji")}
                   >
                     😊
                   </button>
                   <button
                     type="button"
                     className="key function-key extra-wide"
-                    onClick={() => handleVirtualKeyPress(' ')}
+                    onClick={() => handleVirtualKeyPress(" ")}
                   >
                     Space
                   </button>
                   <button
                     type="button"
                     className="key function-key"
-                    onClick={() => setInput(prev => prev.slice(0, -1))}
+                    onClick={() => setInput((prev) => prev.slice(0, -1))}
                   >
                     ⌫
                   </button>
-                  <button 
-                    key="enter" 
-                    type="button" 
+                  <button
+                    key="enter"
+                    type="button"
                     className="key function-key wide"
                     onClick={(e) => handleSubmit(e as any)}
                   >
@@ -530,13 +653,11 @@ export const ChatUI: React.FC = () => {
                   </button>
                 </div>
               </div>
-            ) : keyboardMode === 'emoji' ? (
+            ) : keyboardMode === "emoji" ? (
               <div className="virtual-keyboard">
                 {Object.entries(emojis).map(([category, { title, list }]) => (
                   <div key={category} className="emoji-category">
-                    <div className="emoji-category-title">
-                      {title}
-                    </div>
+                    <div className="emoji-category-title">{title}</div>
                     <div className="emoji-grid">
                       {list.map((emoji: string) => (
                         <button
@@ -553,20 +674,20 @@ export const ChatUI: React.FC = () => {
                   </div>
                 ))}
               </div>
-            ) : keyboardMode === 'sign' ? (
+            ) : keyboardMode === "sign" ? (
               <div className="sign-language-wrapper">
-                <SignLanguageKeyboard 
+                <SignLanguageKeyboard
                   onSelect={handleVirtualKeyPress}
                   showDescriptions={true}
                 />
               </div>
-            ) : keyboardMode === 'hindi' ? (
+            ) : keyboardMode === "hindi" ? (
               <div className="virtual-keyboard hindi-keyboard">
                 <div className="language-info">
                   <h4>हिंदी कीबोर्ड (Hindi Keyboard)</h4>
                   <p>Financial terms in Hindi</p>
                 </div>
-                
+
                 {/* Hindi keyboard layout */}
                 {hindiKeyboard.map((row, rowIndex) => (
                   <div key={rowIndex} className="keyboard-row">
@@ -587,19 +708,19 @@ export const ChatUI: React.FC = () => {
                   <button
                     type="button"
                     className="key function-key extra-wide"
-                    onClick={() => handleVirtualKeyPress(' ')}
+                    onClick={() => handleVirtualKeyPress(" ")}
                   >
                     Space
                   </button>
                   <button
                     type="button"
                     className="key function-key"
-                    onClick={() => setInput(prev => prev.slice(0, -1))}
+                    onClick={() => setInput((prev) => prev.slice(0, -1))}
                   >
                     ⌫
                   </button>
                 </div>
-                
+
                 {/* Common Hindi finance words */}
                 <div className="finance-words">
                   <div className="words-title">Common Financial Terms</div>
@@ -619,13 +740,13 @@ export const ChatUI: React.FC = () => {
                   </div>
                 </div>
               </div>
-            ) : keyboardMode === 'chinese' ? (
+            ) : keyboardMode === "chinese" ? (
               <div className="virtual-keyboard chinese-keyboard">
                 <div className="language-info">
                   <h4>中文键盘 (Chinese Keyboard)</h4>
                   <p>Financial terms in Chinese</p>
                 </div>
-                
+
                 {/* Chinese keyboard layout */}
                 {chineseKeyboard.map((row, rowIndex) => (
                   <div key={rowIndex} className="keyboard-row">
@@ -646,19 +767,19 @@ export const ChatUI: React.FC = () => {
                   <button
                     type="button"
                     className="key function-key extra-wide"
-                    onClick={() => handleVirtualKeyPress(' ')}
+                    onClick={() => handleVirtualKeyPress(" ")}
                   >
                     Space
                   </button>
                   <button
                     type="button"
                     className="key function-key"
-                    onClick={() => setInput(prev => prev.slice(0, -1))}
+                    onClick={() => setInput((prev) => prev.slice(0, -1))}
                   >
                     ⌫
                   </button>
                 </div>
-                
+
                 {/* Common Chinese finance words with pinyin */}
                 <div className="finance-words">
                   <div className="words-title">Common Financial Terms</div>

@@ -51,7 +51,7 @@
 }
 
 /* Two-column layout */
-.game-layout {
+.loan-dice-game .game-layout {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -66,12 +66,12 @@
 }
 
 /* Dark theme */
-[data-theme="dark"] .game-layout {
+[data-theme="dark"] .loan-dice-game .game-layout {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* High contrast theme */
-[data-theme="contrast"] .game-layout {
+[data-theme="contrast"] .loan-dice-game .game-layout {
     border: 2px solid var(--contrast-border);
     box-shadow: none;
 }
@@ -104,25 +104,25 @@
     font-weight: 600;
 }
 
-.player-info {
+.loan-dice-game .player-info {
     color: var(--light-text);
 }
 
-[data-theme="dark"] .player-info {
+[data-theme="dark"] .loan-dice-game .player-info {
     color: var(--dark-text);
 }
 
-[data-theme="contrast"] .player-info {
+[data-theme="contrast"] .loan-dice-game .player-info {
     color: var(--contrast-text);
 }
 
-.header-stats {
+.loan-dice-game .header-stats {
     display: flex;
     align-items: center;
     gap: calc(var(--spacing-unit) * 0.75);
 }
 
-.score, .high-score {
+.loan-dice-game .score, .high-score {
     font-size: 0.875rem;
     font-weight: 600;
     padding: 0.25rem 0.75rem;
@@ -130,43 +130,43 @@
     white-space: nowrap;
 }
 
-.score {
+.loan-dice-game .score {
     color: var(--light-success);
     background: var(--light-surface);
     border: 1px solid var(--light-success);
 }
 
-[data-theme="dark"] .score {
+[data-theme="dark"] .loan-dice-game .score {
     color: var(--dark-success);
     background: var(--dark-surface);
     border-color: var(--dark-success);
 }
 
-[data-theme="contrast"] .score {
+[data-theme="contrast"] .loan-dice-game .score {
     color: var(--contrast-success);
     background: var(--contrast-surface);
     border: 2px solid var(--contrast-success);
 }
 
-.high-score {
+.loan-dice-game .high-score {
     color: var(--light-primary);
     background: var(--light-surface);
     border: 1px solid var(--light-primary);
 }
 
-[data-theme="dark"] .high-score {
+[data-theme="dark"] .loan-dice-game .high-score {
     color: var(--dark-primary);
     background: var(--dark-surface);
     border-color: var(--dark-primary);
 }
 
-[data-theme="contrast"] .high-score {
+[data-theme="contrast"] .loan-dice-game .high-score {
     color: var(--contrast-primary);
     background: var(--contrast-surface);
     border: 2px solid var(--contrast-primary);
 }
 
-.game-content {
+.loan-dice-game .game-content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -178,7 +178,7 @@
     min-height: 300px;
 }
 
-.game-button {
+.loan-dice-game .game-button {
     background: var(--light-primary);
     color: white;
     border: none;
@@ -191,38 +191,38 @@
     min-width: 120px;
 }
 
-[data-theme="dark"] .game-button {
+[data-theme="dark"] .loan-dice-game .game-button {
     background: var(--dark-primary);
 }
 
-[data-theme="contrast"] .game-button {
+[data-theme="contrast"] .loan-dice-game .game-button {
     background: var(--contrast-primary);
     color: var(--contrast-background);
     border: 2px solid var(--contrast-border);
     font-weight: 700;
 }
 
-.game-button:hover {
+.loan-dice-game .game-button:hover {
     opacity: 0.9;
     transform: translateY(-1px);
 }
 
-.game-button:disabled {
+.loan-dice-game .game-button:disabled {
     background: var(--light-text-secondary);
     cursor: not-allowed;
     transform: none;
 }
 
-[data-theme="dark"] .game-button:disabled {
+[data-theme="dark"] .loan-dice-game .game-button:disabled {
     background: var(--dark-text-secondary);
 }
 
-[data-theme="contrast"] .game-button:disabled {
+[data-theme="contrast"] .loan-dice-game .game-button:disabled {
     background: var(--contrast-text-secondary);
     border-color: var(--contrast-text-secondary);
 }
 
-.dice-container {
+.loan-dice-game .dice-container {
     width: 152px;
     height: 152px;
     margin: var(--spacing-unit) auto;
@@ -230,7 +230,7 @@
     position: relative;
 }
 
-.dice {
+.loan-dice-game .dice {
     width: 100%;
     height: 100%;
     position: relative;
@@ -246,7 +246,7 @@
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.dice.rolling {
+.loan-dice-game .dice.rolling {
     animation: roll 1s cubic-bezier(0.45, 0, 0.55, 1) infinite;
     will-change: transform;
 }
@@ -265,7 +265,7 @@
     }
 }
 
-.dot {
+.loan-dice-game .dot {
     width: 20px;
     height: 20px;
     background-color: var(--light-primary);
@@ -275,18 +275,18 @@
     position: relative;
 }
 
-[data-theme="dark"] .dot {
+[data-theme="dark"] .loan-dice-game .dot {
     background-color: var(--dark-primary);
     box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.1);
 }
 
-[data-theme="contrast"] .dot {
+[data-theme="contrast"] .loan-dice-game .dot {
     background-color: var(--contrast-primary);
     border: 2px solid var(--contrast-border);
     box-shadow: none;
 }
 
-.message {
+.loan-dice-game .message {
     text-align: center;
     padding: 1rem;
     margin: 1rem 0;
@@ -294,45 +294,45 @@
     animation: fadeIn 0.3s ease-out;
 }
 
-.message.success {
+.loan-dice-game .message.success {
     background: var(--light-surface);
     color: var(--light-success);
     border: 1px solid var(--light-success);
 }
 
-[data-theme="dark"] .message.success {
+[data-theme="dark"] .loan-dice-game .message.success {
     background: var(--dark-surface);
     color: var(--dark-success);
     border-color: var(--dark-success);
 }
 
-[data-theme="contrast"] .message.success {
+[data-theme="contrast"] .loan-dice-game .message.success {
     background: var(--contrast-surface);
     color: var(--contrast-success);
     border: 2px solid var(--contrast-success);
     font-weight: 600;
 }
 
-.message.info {
+.loan-dice-game .message.info {
     background: var(--light-surface);
     color: var(--light-primary);
     border: 1px solid var(--light-primary);
 }
 
-[data-theme="dark"] .message.info {
+[data-theme="dark"] .loan-dice-game .message.info {
     background: var(--dark-surface);
     color: var(--dark-primary);
     border-color: var(--dark-primary);
 }
 
-[data-theme="contrast"] .message.info {
+[data-theme="contrast"] .loan-dice-game .message.info {
     background: var(--contrast-surface);
     color: var(--contrast-primary);
     border: 2px solid var(--contrast-primary);
     font-weight: 600;
 }
 
-.game-area {
+.loan-dice-game .game-area {
     padding: calc(var(--spacing-unit));
     background: var(--light-surface);
     border-radius: var(--border-radius);
@@ -344,17 +344,17 @@
     min-height: 200px;
 }
 
-[data-theme="dark"] .game-area {
+[data-theme="dark"] .loan-dice-game .game-area {
     background: var(--dark-surface);
     border-color: var(--dark-border);
 }
 
-[data-theme="contrast"] .game-area {
+[data-theme="contrast"] .loan-dice-game .game-area {
     background: var(--contrast-surface);
     border: 2px solid var(--contrast-border);
 }
 
-.question-area {
+.loan-dice-game .question-area {
     width: 100%;
     padding: calc(var(--spacing-unit));
     background: var(--light-surface);
@@ -366,17 +366,17 @@
     margin-top: var(--spacing-unit);
 }
 
-[data-theme="dark"] .question-area {
+[data-theme="dark"] .loan-dice-game .question-area {
     background: var(--dark-surface);
     border-color: var(--dark-border);
 }
 
-[data-theme="contrast"] .question-area {
+[data-theme="contrast"] .loan-dice-game .question-area {
     background: var(--contrast-surface);
     border: 2px solid var(--contrast-border);
 }
 
-.topic-card {
+.loan-dice-game .topic-card {
     width: 100%;
     padding: calc(var(--spacing-unit));
     animation: slideUp 0.3s ease-out;
@@ -388,7 +388,7 @@
     gap: calc(var(--spacing-unit) * 0.75);
 }
 
-.topic-header {
+.loan-dice-game .topic-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -397,16 +397,16 @@
     margin-bottom: calc(var(--spacing-unit) * 0.5);
 }
 
-.topic-header h3 {
+.loan-dice-game .topic-header h3 {
     margin: 0;
     font-size: 1.5rem;
 }
 
-.topic-category {
+.loan-dice-game .topic-category {
     text-transform: capitalize;
 }
 
-.question {
+.loan-dice-game .question {
     font-size: 1.125rem;
     line-height: 1.6;
     color: var(--light-text);
@@ -417,19 +417,19 @@
     margin: calc(var(--spacing-unit) * 0.5) 0;
 }
 
-[data-theme="dark"] .question {
+[data-theme="dark"] .loan-dice-game .question {
     color: var(--dark-text);
     background: var(--dark-surface);
     border-color: var(--dark-border);
 }
 
-[data-theme="contrast"] .question {
+[data-theme="contrast"] .loan-dice-game .question {
     color: var(--contrast-text);
     background: var(--contrast-surface);
     border: 2px solid var(--contrast-border);
 }
 
-.answer {
+.loan-dice-game .answer {
     padding: calc(var(--spacing-unit));
     background: var(--light-surface);
     border: 1px solid var(--light-success);
@@ -442,50 +442,50 @@
     margin-bottom: calc(var(--spacing-unit) * 0.5);
 }
 
-[data-theme="dark"] .answer {
+[data-theme="dark"] .loan-dice-game .answer {
     background: var(--dark-surface);
     border-color: var(--dark-success);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     color: var(--dark-text);
 }
 
-[data-theme="contrast"] .answer {
+[data-theme="contrast"] .loan-dice-game .answer {
     background: var(--contrast-surface);
     border: 2px solid var(--contrast-success);
     box-shadow: none;
     color: var(--contrast-text);
 }
 
-.answer h4 {
+.loan-dice-game .answer h4 {
     margin: 0;
     color: var(--light-success);
     font-size: 1.1rem;
 }
 
-[data-theme="dark"] .answer h4 {
+[data-theme="dark"] .loan-dice-game .answer h4 {
     color: var(--dark-success);
 }
 
-[data-theme="contrast"] .answer h4 {
+[data-theme="contrast"] .loan-dice-game .answer h4 {
     color: var(--contrast-success);
 }
 
-.points {
+.loan-dice-game .points {
     margin-top: 1rem;
     font-weight: bold;
     color: var(--light-success);
     text-align: right;
 }
 
-[data-theme="dark"] .points {
+[data-theme="dark"] .loan-dice-game .points {
     color: var(--dark-success);
 }
 
-[data-theme="contrast"] .points {
+[data-theme="contrast"] .loan-dice-game .points {
     color: var(--contrast-success);
 }
 
-.instructions {
+.loan-dice-game .instructions {
     margin-top: 2rem;
     padding: 1.5rem;
     background: var(--light-surface);
@@ -493,26 +493,26 @@
     border: 1px solid var(--light-border);
 }
 
-[data-theme="dark"] .instructions {
+[data-theme="dark"] .loan-dice-game .instructions {
     background: var(--dark-surface);
     border-color: var(--dark-border);
 }
 
-[data-theme="contrast"] .instructions {
+[data-theme="contrast"] .loan-dice-game .instructions {
     background: var(--contrast-surface);
     border: 2px solid var(--contrast-border);
 }
 
-.instructions p {
+.loan-dice-game .instructions p {
     margin: 0.5rem 0;
     color: var(--light-text);
 }
 
-[data-theme="dark"] .instructions p {
+[data-theme="dark"] .loan-dice-game .instructions p {
     color: var(--dark-text);
 }
 
-[data-theme="contrast"] .instructions p {
+[data-theme="contrast"] .loan-dice-game .instructions p {
     color: var(--contrast-text);
 }
 
